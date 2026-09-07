@@ -43,6 +43,7 @@ async function artifactFor(
   path: string,
   language: string,
   contentHash: string,
+  sourceText?: string,
 ): Promise<{ artifact: ParseArtifact; cacheHit: boolean }> {
   const parserVersion = parserVersionFor(language);
   const cached = store.db.get<{ parse_artifact: string }>(
@@ -53,7 +54,7 @@ async function artifactFor(
   if (cached) {
     return { artifact: JSON.parse(cached.parse_artifact) as ParseArtifact, cacheHit: true };
   }
-  const source = await readFile(join(store.repoRoot, path), 'utf8');
+  const source = sourceText ?? (await readFile(join(store.repoRoot, path), 'utf8'));
   const artifact = await parseSource(source, language);
   store.db.run(
     `INSERT OR REPLACE INTO file_versions (content_hash, parser_version, language, parse_artifact, indexed_at)
@@ -133,6 +134,70 @@ function resolveName(
     }));
   }
   return [];
+}
+
+const FTS_CHUNK_LINES = 40;
+const FTS_MAX_BYTES = 200_000;
+const FTS_LANGUAGES = new Set([
+  'typescript',
+  'tsx',
+  'javascript',
+  'python',
+  'sql',
+  'json',
+  'yaml',
+  'toml',
+  'markdown',
+]);
+
+/** Refresh lexical index rows for one file (spec section 19). */
+function updateFtsForFile(
+  store: GraphStore,
+  path: string,
+  language: string | undefined,
+  source: string,
+): void {
+  store.db.run(`DELETE FROM source_fts WHERE path = ?`, path);
+  store.db.run(`DELETE FROM docs_fts WHERE path = ?`, path);
+  if (!language || !FTS_LANGUAGES.has(language) || source.length > FTS_MAX_BYTES) return;
+  if (language === 'markdown') {
+    store.db.run(`INSERT INTO docs_fts (path, text) VALUES (?, ?)`, path, source);
+    return;
+  }
+  const lines = source.split('\n');
+  for (let start = 0; start < lines.length; start += FTS_CHUNK_LINES) {
+    const chunk = lines.slice(start, start + FTS_CHUNK_LINES).join('\n');
+    if (chunk.trim().length === 0) continue;
+    store.db.run(
+      `INSERT INTO source_fts (path, chunk_start, text) VALUES (?, ?, ?)`,
+      path,
+      start + 1,
+      chunk,
+    );
+  }
+}
+
+function rebuildSymbolsFts(store: GraphStore): void {
+  store.db.run(`DELETE FROM symbols_fts`);
+  for (const row of store.db.all<{
+    id: string;
+    name: string;
+    qualified_name: string;
+    signature: string | null;
+    doc: string | null;
+  }>(
+    `SELECT id, name, qualified_name, signature, doc FROM symbols WHERE repo_id = ? AND kind != 'external'`,
+    store.repoId,
+  )) {
+    store.db.run(
+      `INSERT INTO symbols_fts (name, qualified_name, signature, doc, symbol_id) VALUES (?, ?, ?, ?, ?)`,
+      row.name,
+      row.qualified_name,
+      row.signature ?? '',
+      row.doc ?? '',
+      row.id,
+    );
+  }
 }
 
 const CALL_KINDS = new Set(['function', 'method', 'class']);
@@ -308,15 +373,29 @@ export async function indexRepo(store: GraphStore, opts: IndexOptions = {}): Pro
   let parsed = 0;
   let cacheHits = 0;
   const artifacts = new Map<string, { language: string; artifact: ParseArtifact }>();
+  const ftsUpdates = new Map<string, { language: string | undefined; source: string }>();
 
   // Load artifacts for every parseable file; parse only NEW/MODIFIED misses.
   for (const change of plan.changes) {
-    if (change.state === 'DELETED' || !canParse(change.language)) continue;
+    if (change.state === 'DELETED') continue;
+    let source: string | undefined;
+    if (change.state === 'NEW' || change.state === 'MODIFIED') {
+      try {
+        source = await readFile(join(store.repoRoot, change.path), 'utf8');
+      } catch {
+        source = undefined;
+      }
+      if (source !== undefined) {
+        ftsUpdates.set(change.path, { language: change.language, source });
+      }
+    }
+    if (!canParse(change.language)) continue;
     const { artifact, cacheHit } = await artifactFor(
       store,
       change.path,
       change.language,
       change.contentHash,
+      source,
     );
     if (cacheHit) cacheHits += 1;
     else parsed += 1;
@@ -334,14 +413,20 @@ export async function indexRepo(store: GraphStore, opts: IndexOptions = {}): Pro
           store.repoId,
           change.path,
         );
+        store.db.run(`DELETE FROM source_fts WHERE path = ?`, change.path);
+        store.db.run(`DELETE FROM docs_fts WHERE path = ?`, change.path);
         continue;
       }
       if ((change.state === 'NEW' || change.state === 'MODIFIED') && artifacts.has(change.path)) {
         upsertSymbols(store, change.path, change.language!, artifacts.get(change.path)!.artifact);
       }
     }
+    for (const [path, { language, source }] of ftsUpdates) {
+      updateFtsForFile(store, path, language, source);
+    }
     if (changed > 0 || opts.full) {
       edges = rebuildEdges(store, artifacts);
+      rebuildSymbolsFts(store);
       bumpGraphRevision(store.db);
       edgesRebuilt = true;
     } else {

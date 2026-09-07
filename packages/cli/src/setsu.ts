@@ -11,6 +11,7 @@ import {
   runGraphTop,
   runGraphExport,
 } from './commands/graph-cmds.js';
+import { runContext } from './commands/context-cmd.js';
 
 declare const __SETSU_VERSION__: string;
 const version = typeof __SETSU_VERSION__ === 'string' ? __SETSU_VERSION__ : '0.0.0-dev';
@@ -44,6 +45,18 @@ program
   .option('--full', 'discard the existing index and rebuild')
   .action(async (opts: { repo: string; stats?: boolean; full?: boolean }) => {
     await runIndex(opts);
+  });
+
+program
+  .command('context <query>')
+  .description('Build a token-budgeted evidence pack for a question')
+  .option('--repo <root>', 'repository root', process.cwd())
+  .option('--budget <tokens>', 'max estimated tokens')
+  .option('--mode <mode>', 'auto | graph | symbol | search | repo_map', 'auto')
+  .option('--json', 'emit the ContextPack as JSON')
+  .option('--explain', 'show routing and packing decisions')
+  .action(async (query: string, opts: { repo: string; budget?: string; json?: boolean; explain?: boolean; mode?: string }) => {
+    await runContext(query, opts);
   });
 
 program
