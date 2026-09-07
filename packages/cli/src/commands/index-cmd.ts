@@ -1,12 +1,5 @@
-import { discoverFiles } from '@setsu-ai/core';
-import {
-  openGraphDb,
-  classifyFiles,
-  applyFileChanges,
-  bumpGraphRevision,
-  getGraphRevision,
-  graphDbPath,
-} from '@setsu-ai/storage';
+import { openGraphDb, graphDbPath } from '@setsu-ai/storage';
+import { indexRepo, graphStats } from '@setsu-ai/graph';
 
 export interface IndexOptions {
   repo: string;
@@ -15,45 +8,46 @@ export interface IndexOptions {
 }
 
 export async function runIndex(opts: IndexOptions): Promise<void> {
-  const started = Date.now();
   const store = openGraphDb(opts.repo);
   try {
-    if (opts.full) {
-      store.db.transaction(() => {
-        store.db.run(`DELETE FROM files WHERE repo_id = ?`, store.repoId);
-        store.db.run(`DELETE FROM symbols WHERE repo_id = ?`, store.repoId);
-        store.db.run(`DELETE FROM edges WHERE repo_id = ?`, store.repoId);
-      });
-    }
-
-    const discovered = await discoverFiles(store.repoRoot);
-    const plan = await classifyFiles(store.db, store.repoId, store.repoRoot, discovered);
-
-    const changed = plan.counts.NEW + plan.counts.MODIFIED + plan.counts.DELETED;
-    store.db.transaction(() => {
-      applyFileChanges(store.db, store.repoId, plan);
-      if (changed > 0) bumpGraphRevision(store.db);
-    });
-
-    const byLanguage = new Map<string, number>();
-    for (const f of discovered) {
-      const lang = f.language ?? 'other';
-      byLanguage.set(lang, (byLanguage.get(lang) ?? 0) + 1);
-    }
-
-    console.log(`Indexed ${discovered.length} files in ${Date.now() - started}ms`);
+    const result = await indexRepo(store, { full: opts.full ?? false });
     console.log(
-      `  new ${plan.counts.NEW} | modified ${plan.counts.MODIFIED} | unchanged ${plan.counts.UNCHANGED} | deleted ${plan.counts.DELETED}`,
+      `Indexed ${result.files} files in ${result.durationMs}ms ` +
+        `(parsed ${result.parsed}, cache hits ${result.cacheHits})`,
     );
-    console.log(`  graph revision: ${getGraphRevision(store.db)}`);
+    console.log(
+      `  new ${result.counts['NEW']} | modified ${result.counts['MODIFIED']} | ` +
+        `unchanged ${result.counts['UNCHANGED']} | deleted ${result.counts['DELETED']}`,
+    );
+    console.log(`  symbols ${result.symbols} | edges ${result.edges} | revision ${result.revision}`);
     console.log(`  db: ${graphDbPath(store.repoRoot)}`);
-
     if (opts.stats) {
-      const langs = [...byLanguage.entries()].sort((a, b) => b[1] - a[1]);
-      console.log('  languages:');
-      for (const [lang, count] of langs) console.log(`    ${lang.padEnd(12)} ${count}`);
+      printStats(store);
     }
   } finally {
     store.db.close();
   }
+}
+
+export async function runGraphStats(repo: string): Promise<void> {
+  const store = openGraphDb(repo);
+  try {
+    printStats(store);
+  } finally {
+    store.db.close();
+  }
+}
+
+function printStats(store: ReturnType<typeof openGraphDb>): void {
+  const stats = graphStats(store);
+  console.log(`Graph: ${stats.files} files, ${stats.symbols} symbols, ${stats.edges} edges (revision ${stats.revision})`);
+  console.log('  symbols by kind:');
+  for (const [kind, n] of Object.entries(stats.symbolsByKind)) {
+    console.log(`    ${kind.padEnd(12)} ${n}`);
+  }
+  console.log('  edges by type:');
+  for (const [type, n] of Object.entries(stats.edgesByType)) {
+    console.log(`    ${type.padEnd(12)} ${n}`);
+  }
+  console.log(`  estimated signature tokens: ~${stats.estimatedGraphTokens}`);
 }

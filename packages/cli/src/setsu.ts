@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { Command } from 'commander';
 import { runInit } from './commands/init.js';
-import { runIndex } from './commands/index-cmd.js';
+import { runIndex, runGraphStats } from './commands/index-cmd.js';
 
 declare const __SETSU_VERSION__: string;
 const version = typeof __SETSU_VERSION__ === 'string' ? __SETSU_VERSION__ : '0.0.0-dev';
@@ -35,6 +35,15 @@ program
   .option('--full', 'discard the existing index and rebuild')
   .action(async (opts: { repo: string; stats?: boolean; full?: boolean }) => {
     await runIndex(opts);
+  });
+
+const graph = program.command('graph').description('Inspect the code graph');
+graph
+  .command('stats')
+  .description('Show node/edge counts and revision')
+  .option('--repo <root>', 'repository root', process.cwd())
+  .action(async (opts: { repo: string }) => {
+    await runGraphStats(opts.repo);
   });
 
 program.parseAsync(process.argv).catch((err: unknown) => {

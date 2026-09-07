@@ -1,0 +1,837 @@
+{
+  "app/db.py": {
+    "language": "python",
+    "parserVersion": "py-v1",
+    "symbols": [
+      {
+        "name": "UserRepository",
+        "qualifiedName": "UserRepository",
+        "kind": "class",
+        "startLine": 6,
+        "endLine": 14,
+        "signature": "class UserRepository:",
+        "bodyHash": "1687ececd2222e12",
+        "exported": true
+      },
+      {
+        "name": "__init__",
+        "qualifiedName": "UserRepository.__init__",
+        "kind": "method",
+        "startLine": 7,
+        "endLine": 8,
+        "signature": "def __init__(self):",
+        "bodyHash": "79313483ee8f0f9a",
+        "exported": false
+      },
+      {
+        "name": "find_user",
+        "qualifiedName": "UserRepository.find_user",
+        "kind": "method",
+        "startLine": 10,
+        "endLine": 11,
+        "signature": "def find_user(self, user_id):",
+        "bodyHash": "9e210a50adc46160",
+        "exported": true
+      },
+      {
+        "name": "save_user",
+        "qualifiedName": "UserRepository.save_user",
+        "kind": "method",
+        "startLine": 13,
+        "endLine": 14,
+        "signature": "def save_user(self, user: User):",
+        "bodyHash": "ef13e4f01aced32b",
+        "exported": true
+      },
+      {
+        "name": "InvoiceRepository",
+        "qualifiedName": "InvoiceRepository",
+        "kind": "class",
+        "startLine": 17,
+        "endLine": 25,
+        "signature": "class InvoiceRepository:",
+        "bodyHash": "bb644b595e1685e0",
+        "exported": true
+      },
+      {
+        "name": "__init__",
+        "qualifiedName": "InvoiceRepository.__init__",
+        "kind": "method",
+        "startLine": 18,
+        "endLine": 19,
+        "signature": "def __init__(self):",
+        "bodyHash": "a76dbc2b663eec3f",
+        "exported": false
+      },
+      {
+        "name": "find_invoice",
+        "qualifiedName": "InvoiceRepository.find_invoice",
+        "kind": "method",
+        "startLine": 21,
+        "endLine": 22,
+        "signature": "def find_invoice(self, invoice_id):",
+        "bodyHash": "fe219092b6342f2c",
+        "exported": true
+      },
+      {
+        "name": "save_invoice",
+        "qualifiedName": "InvoiceRepository.save_invoice",
+        "kind": "method",
+        "startLine": 24,
+        "endLine": 25,
+        "signature": "def save_invoice(self, invoice: Invoice):",
+        "bodyHash": "7a78aff4ecf7a1aa",
+        "exported": true
+      }
+    ],
+    "relations": [
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "app.models",
+        "line": 3
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "UserRepository.find_user",
+        "toName": "get",
+        "line": 11
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "InvoiceRepository.find_invoice",
+        "toName": "get",
+        "line": 22
+      }
+    ],
+    "hadErrors": false
+  },
+  "app/main.py": {
+    "language": "python",
+    "parserVersion": "py-v1",
+    "symbols": [
+      {
+        "name": "APP_NAME",
+        "qualifiedName": "APP_NAME",
+        "kind": "variable",
+        "startLine": 5,
+        "endLine": 5,
+        "signature": "APP_NAME = \"py-sample\"",
+        "bodyHash": "7d19889108d05e35",
+        "exported": true
+      },
+      {
+        "name": "main",
+        "qualifiedName": "main",
+        "kind": "function",
+        "startLine": 8,
+        "endLine": 10,
+        "signature": "def main():",
+        "bodyHash": "785db6df4bd96bc1",
+        "exported": true
+      }
+    ],
+    "relations": [
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "app.routes",
+        "line": 3
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "main",
+        "toName": "build_services",
+        "line": 9
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "main",
+        "toName": "print",
+        "line": 10
+      }
+    ],
+    "hadErrors": false
+  },
+  "app/models.py": {
+    "language": "python",
+    "parserVersion": "py-v1",
+    "symbols": [
+      {
+        "name": "CustomerStatus",
+        "qualifiedName": "CustomerStatus",
+        "kind": "class",
+        "startLine": 7,
+        "endLine": 10,
+        "signature": "class CustomerStatus(Enum):",
+        "bodyHash": "6df17ef8d3cee076",
+        "exported": true
+      },
+      {
+        "name": "ACTIVE",
+        "qualifiedName": "CustomerStatus.ACTIVE",
+        "kind": "property",
+        "startLine": 8,
+        "endLine": 8,
+        "signature": "ACTIVE = \"active\"",
+        "bodyHash": "580b0fa415b0cfa7",
+        "exported": true
+      },
+      {
+        "name": "SUSPENDED",
+        "qualifiedName": "CustomerStatus.SUSPENDED",
+        "kind": "property",
+        "startLine": 9,
+        "endLine": 9,
+        "signature": "SUSPENDED = \"suspended\"",
+        "bodyHash": "62ba7c3c92f9e79b",
+        "exported": true
+      },
+      {
+        "name": "CLOSED",
+        "qualifiedName": "CustomerStatus.CLOSED",
+        "kind": "property",
+        "startLine": 10,
+        "endLine": 10,
+        "signature": "CLOSED = \"closed\"",
+        "bodyHash": "fdfb169cf421c825",
+        "exported": true
+      },
+      {
+        "name": "User",
+        "qualifiedName": "User",
+        "kind": "class",
+        "startLine": 14,
+        "endLine": 17,
+        "signature": "class User:",
+        "bodyHash": "aaad39577d840eba",
+        "exported": true
+      },
+      {
+        "name": "id",
+        "qualifiedName": "User.id",
+        "kind": "property",
+        "startLine": 15,
+        "endLine": 15,
+        "signature": "id: str",
+        "bodyHash": "7dcdf37fc05317f1",
+        "exported": true
+      },
+      {
+        "name": "email",
+        "qualifiedName": "User.email",
+        "kind": "property",
+        "startLine": 16,
+        "endLine": 16,
+        "signature": "email: str",
+        "bodyHash": "073f2da50ead230d",
+        "exported": true
+      },
+      {
+        "name": "status",
+        "qualifiedName": "User.status",
+        "kind": "property",
+        "startLine": 17,
+        "endLine": 17,
+        "signature": "status: CustomerStatus",
+        "bodyHash": "7920263aec240995",
+        "exported": true
+      },
+      {
+        "name": "Invoice",
+        "qualifiedName": "Invoice",
+        "kind": "class",
+        "startLine": 21,
+        "endLine": 25,
+        "signature": "class Invoice:",
+        "bodyHash": "b06344f2fc8c956d",
+        "exported": true
+      },
+      {
+        "name": "id",
+        "qualifiedName": "Invoice.id",
+        "kind": "property",
+        "startLine": 22,
+        "endLine": 22,
+        "signature": "id: str",
+        "bodyHash": "7dcdf37fc05317f1",
+        "exported": true
+      },
+      {
+        "name": "user_id",
+        "qualifiedName": "Invoice.user_id",
+        "kind": "property",
+        "startLine": 23,
+        "endLine": 23,
+        "signature": "user_id: str",
+        "bodyHash": "e24279f4b6a73985",
+        "exported": true
+      },
+      {
+        "name": "amount_cents",
+        "qualifiedName": "Invoice.amount_cents",
+        "kind": "property",
+        "startLine": 24,
+        "endLine": 24,
+        "signature": "amount_cents: int",
+        "bodyHash": "d7006b6151d65883",
+        "exported": true
+      },
+      {
+        "name": "paid",
+        "qualifiedName": "Invoice.paid",
+        "kind": "property",
+        "startLine": 25,
+        "endLine": 25,
+        "signature": "paid: bool = False",
+        "bodyHash": "830a0bf881fe2a5d",
+        "exported": true
+      }
+    ],
+    "relations": [
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "dataclasses",
+        "line": 3
+      },
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "enum",
+        "line": 4
+      },
+      {
+        "type": "extends",
+        "fromSymbol": "CustomerStatus",
+        "toName": "Enum",
+        "line": 7
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "dataclass",
+        "line": 13
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "dataclass",
+        "line": 20
+      }
+    ],
+    "hadErrors": false
+  },
+  "app/routes.py": {
+    "language": "python",
+    "parserVersion": "py-v1",
+    "symbols": [
+      {
+        "name": "build_services",
+        "qualifiedName": "build_services",
+        "kind": "function",
+        "startLine": 8,
+        "endLine": 13,
+        "signature": "def build_services():",
+        "bodyHash": "e386ccbe1ea9c185",
+        "exported": true
+      },
+      {
+        "name": "handle_pay",
+        "qualifiedName": "handle_pay",
+        "kind": "function",
+        "startLine": 16,
+        "endLine": 19,
+        "signature": "def handle_pay(payment: PaymentService, invoice):",
+        "bodyHash": "85f1eebe341475a5",
+        "exported": true
+      },
+      {
+        "name": "handle_login",
+        "qualifiedName": "handle_login",
+        "kind": "function",
+        "startLine": 22,
+        "endLine": 26,
+        "signature": "def handle_login(auth: AuthService, email, password):",
+        "bodyHash": "4270e14948e0d723",
+        "exported": true
+      }
+    ],
+    "relations": [
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "app.db",
+        "line": 3
+      },
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "app.services.auth",
+        "line": 4
+      },
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "app.services.payment",
+        "line": 5
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "build_services",
+        "toName": "UserRepository",
+        "line": 9
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "build_services",
+        "toName": "InvoiceRepository",
+        "line": 10
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "build_services",
+        "toName": "PaymentService",
+        "line": 11
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "build_services",
+        "toName": "StripeClient",
+        "line": 11
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "build_services",
+        "toName": "AuthService",
+        "line": 12
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "handle_pay",
+        "toName": "payment.pay_invoice",
+        "line": 17
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "handle_login",
+        "toName": "auth.authenticate",
+        "line": 23
+      }
+    ],
+    "hadErrors": false
+  },
+  "app/services/auth.py": {
+    "language": "python",
+    "parserVersion": "py-v1",
+    "symbols": [
+      {
+        "name": "SESSION_TTL_SECONDS",
+        "qualifiedName": "SESSION_TTL_SECONDS",
+        "kind": "variable",
+        "startLine": 7,
+        "endLine": 7,
+        "signature": "SESSION_TTL_SECONDS = 3600",
+        "bodyHash": "3c8c10bbb07e4844",
+        "exported": true
+      },
+      {
+        "name": "AuthService",
+        "qualifiedName": "AuthService",
+        "kind": "class",
+        "startLine": 10,
+        "endLine": 23,
+        "signature": "class AuthService:",
+        "bodyHash": "7ed825b188adce6e",
+        "exported": true
+      },
+      {
+        "name": "__init__",
+        "qualifiedName": "AuthService.__init__",
+        "kind": "method",
+        "startLine": 11,
+        "endLine": 12,
+        "signature": "def __init__(self, users: UserRepository):",
+        "bodyHash": "f61f07bb6e1c046d",
+        "exported": false
+      },
+      {
+        "name": "authenticate",
+        "qualifiedName": "AuthService.authenticate",
+        "kind": "method",
+        "startLine": 14,
+        "endLine": 20,
+        "signature": "def authenticate(self, email, password):",
+        "bodyHash": "5a6129b6a305ee5d",
+        "exported": true,
+        "doc": "Validate credentials and mint a session token."
+      },
+      {
+        "name": "_hash_password",
+        "qualifiedName": "AuthService._hash_password",
+        "kind": "method",
+        "startLine": 22,
+        "endLine": 23,
+        "signature": "def _hash_password(self, password):",
+        "bodyHash": "75fe25178fe058a2",
+        "exported": false
+      }
+    ],
+    "relations": [
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "hashlib",
+        "line": 3
+      },
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "app.db",
+        "line": 5
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "AuthService.authenticate",
+        "toName": "_hash_password",
+        "line": 16
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "AuthService.authenticate",
+        "toName": "find_user",
+        "line": 17
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "AuthService._hash_password",
+        "toName": "hexdigest",
+        "line": 23
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "AuthService._hash_password",
+        "toName": "hashlib.sha256",
+        "line": 23
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "AuthService._hash_password",
+        "toName": "password.encode",
+        "line": 23
+      }
+    ],
+    "hadErrors": false
+  },
+  "app/services/payment.py": {
+    "language": "python",
+    "parserVersion": "py-v1",
+    "symbols": [
+      {
+        "name": "STRIPE_API_URL",
+        "qualifiedName": "STRIPE_API_URL",
+        "kind": "variable",
+        "startLine": 6,
+        "endLine": 6,
+        "signature": "STRIPE_API_URL = \"https://api.stripe.com/v1\"",
+        "bodyHash": "4d4cc15332607bc5",
+        "exported": true
+      },
+      {
+        "name": "StripeClient",
+        "qualifiedName": "StripeClient",
+        "kind": "class",
+        "startLine": 9,
+        "endLine": 17,
+        "signature": "class StripeClient:",
+        "bodyHash": "f2425b1cddb80782",
+        "exported": true,
+        "doc": "Minimal Stripe API client."
+      },
+      {
+        "name": "charge",
+        "qualifiedName": "StripeClient.charge",
+        "kind": "method",
+        "startLine": 12,
+        "endLine": 14,
+        "signature": "def charge(self, amount_cents, customer_id):",
+        "bodyHash": "e7ce0652a97ab81b",
+        "exported": true
+      },
+      {
+        "name": "_idempotency_key",
+        "qualifiedName": "StripeClient._idempotency_key",
+        "kind": "method",
+        "startLine": 16,
+        "endLine": 17,
+        "signature": "def _idempotency_key(self, customer_id, amount_cents):",
+        "bodyHash": "2385a97e838baa45",
+        "exported": false
+      },
+      {
+        "name": "PaymentService",
+        "qualifiedName": "PaymentService",
+        "kind": "class",
+        "startLine": 20,
+        "endLine": 37,
+        "signature": "class PaymentService:",
+        "bodyHash": "39fc8e6331e900d8",
+        "exported": true,
+        "doc": "Validates then charges an invoice."
+      },
+      {
+        "name": "__init__",
+        "qualifiedName": "PaymentService.__init__",
+        "kind": "method",
+        "startLine": 23,
+        "endLine": 26,
+        "signature": "def __init__(self, stripe: StripeClient, users: UserRepository, invoices: InvoiceRepository):",
+        "bodyHash": "d49c01db23f46394",
+        "exported": false
+      },
+      {
+        "name": "pay_invoice",
+        "qualifiedName": "PaymentService.pay_invoice",
+        "kind": "method",
+        "startLine": 28,
+        "endLine": 37,
+        "signature": "def pay_invoice(self, invoice):",
+        "bodyHash": "75c6665b7664dd85",
+        "exported": true
+      }
+    ],
+    "relations": [
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "app.db",
+        "line": 3
+      },
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "app.validation",
+        "line": 4
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "StripeClient.charge",
+        "toName": "_idempotency_key",
+        "line": 13
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "PaymentService.pay_invoice",
+        "toName": "find_user",
+        "line": 29
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "PaymentService.pay_invoice",
+        "toName": "validate_invoice",
+        "line": 32
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "PaymentService.pay_invoice",
+        "toName": "charge",
+        "line": 33
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "PaymentService.pay_invoice",
+        "toName": "save_invoice",
+        "line": 36
+      }
+    ],
+    "hadErrors": false
+  },
+  "app/validation.py": {
+    "language": "python",
+    "parserVersion": "py-v1",
+    "symbols": [
+      {
+        "name": "ValidationError",
+        "qualifiedName": "ValidationError",
+        "kind": "class",
+        "startLine": 6,
+        "endLine": 7,
+        "signature": "class ValidationError(Exception):",
+        "bodyHash": "46fd67476a356848",
+        "exported": true
+      },
+      {
+        "name": "validate_invoice",
+        "qualifiedName": "validate_invoice",
+        "kind": "function",
+        "startLine": 10,
+        "endLine": 15,
+        "signature": "def validate_invoice(invoice: Invoice, user: User):",
+        "bodyHash": "564e3a2ad287ab11",
+        "exported": true,
+        "doc": "Suspended or closed customers must never be billed."
+      }
+    ],
+    "relations": [
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "app.models",
+        "line": 3
+      },
+      {
+        "type": "extends",
+        "fromSymbol": "ValidationError",
+        "toName": "Exception",
+        "line": 6
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "validate_invoice",
+        "toName": "ValidationError",
+        "line": 13
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "validate_invoice",
+        "toName": "ValidationError",
+        "line": 15
+      }
+    ],
+    "hadErrors": false
+  },
+  "tests/test_auth.py": {
+    "language": "python",
+    "parserVersion": "py-v1",
+    "symbols": [
+      {
+        "name": "test_login_unknown_user_fails",
+        "qualifiedName": "test_login_unknown_user_fails",
+        "kind": "function",
+        "startLine": 5,
+        "endLine": 7,
+        "signature": "def test_login_unknown_user_fails():",
+        "bodyHash": "69f3ab66e9825825",
+        "exported": true
+      }
+    ],
+    "relations": [
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "app.db",
+        "line": 1
+      },
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "app.services.auth",
+        "line": 2
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "test_login_unknown_user_fails",
+        "toName": "AuthService",
+        "line": 6
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "test_login_unknown_user_fails",
+        "toName": "UserRepository",
+        "line": 6
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "test_login_unknown_user_fails",
+        "toName": "service.authenticate",
+        "line": 7
+      }
+    ],
+    "hadErrors": false
+  },
+  "tests/test_payment.py": {
+    "language": "python",
+    "parserVersion": "py-v1",
+    "symbols": [
+      {
+        "name": "test_pay_invoice_active_customer",
+        "qualifiedName": "test_pay_invoice_active_customer",
+        "kind": "function",
+        "startLine": 6,
+        "endLine": 11,
+        "signature": "def test_pay_invoice_active_customer():",
+        "bodyHash": "07c41d452098c937",
+        "exported": true
+      }
+    ],
+    "relations": [
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "app.db",
+        "line": 1
+      },
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "app.models",
+        "line": 2
+      },
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "app.services.payment",
+        "line": 3
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "test_pay_invoice_active_customer",
+        "toName": "UserRepository",
+        "line": 7
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "test_pay_invoice_active_customer",
+        "toName": "users.save_user",
+        "line": 8
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "test_pay_invoice_active_customer",
+        "toName": "User",
+        "line": 8
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "test_pay_invoice_active_customer",
+        "toName": "PaymentService",
+        "line": 9
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "test_pay_invoice_active_customer",
+        "toName": "StripeClient",
+        "line": 9
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "test_pay_invoice_active_customer",
+        "toName": "InvoiceRepository",
+        "line": 9
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "test_pay_invoice_active_customer",
+        "toName": "service.pay_invoice",
+        "line": 10
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "test_pay_invoice_active_customer",
+        "toName": "Invoice",
+        "line": 10
+      }
+    ],
+    "hadErrors": false
+  }
+}
