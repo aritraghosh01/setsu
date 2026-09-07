@@ -1,5 +1,5 @@
 import type { GraphStore } from '@setsu-ai/storage';
-import { GraphView, type GraphNode, type GraphEdgeRow } from './graph-view.js';
+import type { GraphView, GraphNode, GraphEdgeRow } from './graph-view.js';
 
 /** Resolve a user-facing name to graph nodes (spec section 26 findNode). */
 export function findNodes(store: GraphStore, query: string, limit = 10): GraphNode[] {

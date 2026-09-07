@@ -1,5 +1,25 @@
-import Graph from 'graphology';
-import louvain from 'graphology-communities-louvain';
+import { createRequire } from 'node:module';
+
+// graphology ships CJS with .d.ts shapes NodeNext can't reconcile with its
+// runtime exports; createRequire sidesteps the interop mismatch entirely.
+const require = createRequire(import.meta.url);
+
+interface UndirectedGraphLike {
+  order: number;
+  size: number;
+  addNode(id: string): void;
+  mergeUndirectedEdge(a: string, b: string, attrs: { weight: number }): void;
+}
+
+const Graph = require('graphology') as new (opts: {
+  type: 'undirected';
+  multi: boolean;
+}) => UndirectedGraphLike;
+
+const louvain = require('graphology-communities-louvain') as (
+  graph: UndirectedGraphLike,
+  options?: { getEdgeWeight?: string; rng?: () => number },
+) => Record<string, number>;
 import { stableId } from '@setsu-ai/core';
 import { getGraphRevision, type GraphStore } from '@setsu-ai/storage';
 import { GraphView } from './graph-view.js';
@@ -48,7 +68,7 @@ export function analyzeGraph(store: GraphStore, view?: GraphView): AnalyzeResult
     assignments = louvain(graph, {
       getEdgeWeight: 'weight',
       rng: mulberry32(0x5e75),
-    }) as Record<string, number>;
+    });
   }
 
   store.db.transaction(() => {
