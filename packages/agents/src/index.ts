@@ -16,7 +16,17 @@ export type {
   ActivationMode,
 } from './types.js';
 export { upsertManagedBlock, hasManagedBlock, SCOUT_GUIDANCE } from './managed-block.js';
-export { parseFrontmatter } from './shared.js';
+export { parseFrontmatter, readText } from './shared.js';
+export {
+  contextTax,
+  findDuplicates,
+  computeEfficiencyScore,
+  type InstructionTax,
+  type DuplicateGroup,
+  type ScoreInput,
+  type ScoreComponent,
+  type EfficiencyScore,
+} from './doctor.js';
 
 export const ADAPTERS: readonly AgentAdapter[] = [
   claudeAdapter,

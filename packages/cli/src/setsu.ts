@@ -15,6 +15,7 @@ import { runContext } from './commands/context-cmd.js';
 import { runWatch } from './commands/watch-cmd.js';
 import { serveStdio } from '@setsu-ai/mcp';
 import { runAdapters } from './commands/adapters-cmd.js';
+import { runDoctor, runScan } from './commands/doctor-cmd.js';
 
 declare const __SETSU_VERSION__: string;
 const version = typeof __SETSU_VERSION__ === 'string' ? __SETSU_VERSION__ : '0.0.0-dev';
@@ -44,6 +45,28 @@ program
   .option('--skip-index', 'do not build the initial graph')
   .action(async (opts: { repo: string; yes?: boolean; mcp?: boolean; guidance?: boolean; skipIndex?: boolean }) => {
     await runInit(opts.repo, opts);
+  });
+
+program
+  .command('doctor')
+  .description('Context efficiency diagnostic: score, instruction cost, graph readiness')
+  .option('--repo <root>', 'repository root', process.cwd())
+  .option('--json', 'emit report as JSON')
+  .action(async (opts: { repo: string; json?: boolean }) => {
+    await runDoctor(opts);
+  });
+
+program
+  .command('scan')
+  .description('CI-friendly doctor: threshold-gated, no prompts, no writes')
+  .option('--repo <root>', 'repository root', process.cwd())
+  .option('--ci', 'CI mode (default behavior; kept for spec compatibility)')
+  .option('--json', 'emit report as JSON')
+  .option('--min-score <n>', 'fail below this efficiency score')
+  .option('--max-persistent-tokens <n>', 'fail above this always-on token cost')
+  .option('--max-duplicate-ratio <r>', 'fail above this duplicate token ratio (0-1)')
+  .action(async (opts: { repo: string; json?: boolean; minScore?: string; maxPersistentTokens?: string; maxDuplicateRatio?: string }) => {
+    await runScan(opts);
   });
 
 program
