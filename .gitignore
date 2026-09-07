@@ -7,4 +7,4 @@ coverage/
 .env
 .env.*
 .DS_Store
-benchmarks/claude-e2e/results/*.raw.json
+benchmarks/claude-e2e/results/
