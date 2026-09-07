@@ -1,0 +1,35 @@
+{
+  "repository": "fixtures/ts-sample",
+  "tasks": [
+    {
+      "id": "architecture-trace",
+      "query": "How does checkout reach the payment gateway?",
+      "relevant": [
+        "src/checkout/controller.ts",
+        "src/checkout/service.ts",
+        "src/payments/gateway.ts",
+        "src/payments/stripe-adapter.ts"
+      ]
+    },
+    {
+      "id": "unknown-concept",
+      "query": "Where is idempotency handled?",
+      "relevant": ["src/payments/stripe-adapter.ts"]
+    },
+    {
+      "id": "dependency-impact",
+      "query": "What breaks if I change CustomerStatus?",
+      "relevant": ["src/users/model.ts", "src/orders/validation.ts", "src/users/service.ts"]
+    },
+    {
+      "id": "symbol-usage",
+      "query": "Where is UserService.findUser called?",
+      "relevant": ["src/users/service.ts", "src/checkout/service.ts", "src/auth/service.ts"]
+    },
+    {
+      "id": "orientation",
+      "query": "Explain this repository",
+      "relevant": []
+    }
+  ]
+}

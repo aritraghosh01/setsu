@@ -18,6 +18,9 @@ import { runAdapters } from './commands/adapters-cmd.js';
 import { runDoctor, runScan } from './commands/doctor-cmd.js';
 import { runOptimize } from './commands/optimize-cmd.js';
 import { runLearn, runFeedback, runPrivacy } from './commands/learn-cmd.js';
+import { runReport } from './commands/report-cmd.js';
+import { runBenchmark } from './commands/benchmark-cmd.js';
+import { runExport, runImport } from './commands/export-cmd.js';
 
 declare const __SETSU_VERSION__: string;
 const version = typeof __SETSU_VERSION__ === 'string' ? __SETSU_VERSION__ : '0.0.0-dev';
@@ -186,6 +189,42 @@ graph
   .option('--repo <root>', 'repository root', process.cwd())
   .action(async (opts: { repo: string }) => {
     await runGraphExport(opts);
+  });
+
+program
+  .command('report')
+  .description('Context + retrieval efficiency and learning profile')
+  .option('--repo <root>', 'repository root', process.cwd())
+  .option('--json', 'emit report as JSON')
+  .action(async (opts: { repo: string; json?: boolean }) => {
+    await runReport(opts);
+  });
+
+program
+  .command('benchmark')
+  .description('Deterministic retrieval-cost benchmark: grep-first baseline vs SETSU')
+  .option('--repo <root>', 'repository root', process.cwd())
+  .option('--tasks <file>', 'benchmark task definition JSON')
+  .option('--json', 'emit results as JSON')
+  .action(async (opts: { repo: string; tasks?: string; json?: boolean }) => {
+    await runBenchmark(opts);
+  });
+
+program
+  .command('export')
+  .description('Dump the code graph as JSON')
+  .option('--repo <root>', 'repository root', process.cwd())
+  .option('--out <file>', 'write to file instead of stdout')
+  .action(async (opts: { repo: string; out?: string }) => {
+    await runExport(opts);
+  });
+
+program
+  .command('import <file>')
+  .description('Load a graph dump produced by setsu export')
+  .option('--repo <root>', 'repository root', process.cwd())
+  .action(async (file: string, opts: { repo: string }) => {
+    await runImport(file, opts);
   });
 
 program
