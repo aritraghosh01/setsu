@@ -31,6 +31,7 @@ const tasksFile = argValue('--tasks', join(HERE, 'tasks-ts-sample.json'));
 const runsPerVariant = Number(argValue('--runs', '3'));
 const onlyTask = argValue('--only', undefined);
 const maxTurns = Number(argValue('--max-turns', '25'));
+const runTimeoutMs = Number(argValue('--run-timeout', '420')) * 1000;
 const model = argValue('--model', undefined);
 
 const suite = JSON.parse(readFileSync(tasksFile, 'utf8'));
@@ -126,7 +127,7 @@ async function claudeRun(ws, variant, query) {
   const result = await run(argValue('--claude-bin', 'claude'), cliArgs, {
     cwd: ws,
     env: { ...process.env, SETSU_HOME: join(ws, '.setsu-home') },
-    timeoutMs: 420_000,
+    timeoutMs: runTimeoutMs,
   });
   const wall = Date.now() - started;
   let parsed;
@@ -189,7 +190,7 @@ for (const variant of ['A', 'B']) {
         process.stdout.write(`[${variant}] ${task.id} run ${runIdx + 1}/${runsPerVariant} ... `);
         let outcome = await claudeRun(ws, variant, task.query);
         // Transient failures (rate limits, empty results) get one retry.
-        if (outcome.error || outcome.isError || !outcome.resultText) {
+        if (!args.includes('--no-retry') && (outcome.error || outcome.isError || !outcome.resultText)) {
           await new Promise((r) => setTimeout(r, 20_000));
           process.stdout.write('retry ... ');
           outcome = await claudeRun(ws, variant, task.query);
