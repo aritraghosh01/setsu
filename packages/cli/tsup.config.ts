@@ -12,6 +12,9 @@ export default defineConfig({
   dts: false,
   sourcemap: true,
   noExternal: [/^@setsu-ai\//],
+  // tsup strips node: prefixes by default, which breaks node:sqlite
+  // (only importable with the prefix).
+  removeNodeProtocol: false,
   define: {
     __SETSU_VERSION__: JSON.stringify(pkg.version),
   },

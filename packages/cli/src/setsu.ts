@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { Command } from 'commander';
 import { runInit } from './commands/init.js';
+import { runIndex } from './commands/index-cmd.js';
 
 declare const __SETSU_VERSION__: string;
 const version = typeof __SETSU_VERSION__ === 'string' ? __SETSU_VERSION__ : '0.0.0-dev';
@@ -24,6 +25,16 @@ program
   .option('--repo <root>', 'repository root', process.cwd())
   .action(async (opts: { repo: string }) => {
     await runInit(opts.repo);
+  });
+
+program
+  .command('index')
+  .description('Index the repository (incremental by default)')
+  .option('--repo <root>', 'repository root', process.cwd())
+  .option('--stats', 'print index statistics')
+  .option('--full', 'discard the existing index and rebuild')
+  .action(async (opts: { repo: string; stats?: boolean; full?: boolean }) => {
+    await runIndex(opts);
   });
 
 program.parseAsync(process.argv).catch((err: unknown) => {
