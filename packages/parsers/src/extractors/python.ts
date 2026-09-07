@@ -100,6 +100,15 @@ function walk(ctx: Ctx, node: Node): void {
     case 'import_from_statement': {
       const moduleName = node.childForFieldName('module_name');
       if (moduleName) addRelation(ctx, 'imports', moduleName.text, node, '');
+      // Imported names are file-level references (impact analysis).
+      for (const child of node.namedChildren) {
+        if (!child || child.id === moduleName?.id) continue;
+        if (child.type === 'dotted_name') addRelation(ctx, 'references', child.text, child, '');
+        if (child.type === 'aliased_import') {
+          const name = child.childForFieldName('name');
+          if (name) addRelation(ctx, 'references', name.text, child, '');
+        }
+      }
       return;
     }
 

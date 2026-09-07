@@ -2,6 +2,15 @@
 import { Command } from 'commander';
 import { runInit } from './commands/init.js';
 import { runIndex, runGraphStats } from './commands/index-cmd.js';
+import {
+  runSymbol,
+  runPath,
+  runImpact,
+  runGraphNode,
+  runGraphCommunity,
+  runGraphTop,
+  runGraphExport,
+} from './commands/graph-cmds.js';
 
 declare const __SETSU_VERSION__: string;
 const version = typeof __SETSU_VERSION__ === 'string' ? __SETSU_VERSION__ : '0.0.0-dev';
@@ -37,6 +46,33 @@ program
     await runIndex(opts);
   });
 
+program
+  .command('symbol <name>')
+  .description('Look up a symbol: definition, callers, callees')
+  .option('--repo <root>', 'repository root', process.cwd())
+  .option('--references', 'list incoming references')
+  .option('--implementations', 'list implementations/subclasses')
+  .action(async (name: string, opts: { repo: string; references?: boolean; implementations?: boolean }) => {
+    await runSymbol(name, opts);
+  });
+
+program
+  .command('path <from> <to>')
+  .description('Shortest relationship path between two symbols')
+  .option('--repo <root>', 'repository root', process.cwd())
+  .action(async (from: string, to: string, opts: { repo: string }) => {
+    await runPath(from, to, opts);
+  });
+
+program
+  .command('impact <name>')
+  .description('Blast radius: what depends on this symbol')
+  .option('--repo <root>', 'repository root', process.cwd())
+  .option('--depth <n>', 'traversal depth', '3')
+  .action(async (name: string, opts: { repo: string; depth?: string }) => {
+    await runImpact(name, opts);
+  });
+
 const graph = program.command('graph').description('Inspect the code graph');
 graph
   .command('stats')
@@ -44,6 +80,34 @@ graph
   .option('--repo <root>', 'repository root', process.cwd())
   .action(async (opts: { repo: string }) => {
     await runGraphStats(opts.repo);
+  });
+graph
+  .command('node <name>')
+  .description('Show a node and its immediate relationships')
+  .option('--repo <root>', 'repository root', process.cwd())
+  .action(async (name: string, opts: { repo: string }) => {
+    await runGraphNode(name, opts);
+  });
+graph
+  .command('community <name>')
+  .description('Show the community a symbol belongs to')
+  .option('--repo <root>', 'repository root', process.cwd())
+  .action(async (name: string, opts: { repo: string }) => {
+    await runGraphCommunity(name, opts);
+  });
+graph
+  .command('top')
+  .description('Highest-PageRank nodes in the graph')
+  .option('--repo <root>', 'repository root', process.cwd())
+  .action(async (opts: { repo: string }) => {
+    await runGraphTop(opts);
+  });
+graph
+  .command('export')
+  .description('Dump the graph as JSON to stdout')
+  .option('--repo <root>', 'repository root', process.cwd())
+  .action(async (opts: { repo: string }) => {
+    await runGraphExport(opts);
   });
 
 program.parseAsync(process.argv).catch((err: unknown) => {

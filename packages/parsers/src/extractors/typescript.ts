@@ -119,6 +119,17 @@ function importRelations(ctx: Ctx, node: Node): void {
   if (source) {
     addRelation(ctx, 'imports', source.text.replace(/^['"]|['"]$/g, ''), node, '');
   }
+  // Named imports are file-level references to the imported symbols; impact
+  // analysis needs them (enum/type usages produce no call relations).
+  const collect = (n: Node): void => {
+    if (n.type === 'import_specifier') {
+      const name = n.childForFieldName('name');
+      if (name) addRelation(ctx, 'references', name.text, n, '');
+      return;
+    }
+    for (const child of n.namedChildren) if (child) collect(child);
+  };
+  collect(node);
 }
 
 function isFunctionValue(value: Node | null): boolean {

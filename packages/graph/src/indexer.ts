@@ -17,6 +17,7 @@ import {
 } from '@setsu-ai/parsers';
 import { symbolId, fileId, externalId, edgeId } from './ids.js';
 import { resolveImport } from './resolve-imports.js';
+import { analyzeGraph } from './analyze.js';
 
 export interface IndexResult {
   files: number;
@@ -136,6 +137,7 @@ function resolveName(
 
 const CALL_KINDS = new Set(['function', 'method', 'class']);
 const TYPE_KINDS = new Set(['class', 'interface', 'type', 'enum']);
+const REF_KINDS = new Set(['class', 'interface', 'type', 'enum', 'function', 'variable']);
 
 /**
  * Rebuild the edges table from per-file parse artifacts. Symbol rows are
@@ -215,18 +217,16 @@ function rebuildEdges(
   };
 
   for (const [path, { language, artifact }] of artifacts) {
-    // file -> symbol containment (defines)
     for (const sym of artifact.symbols) {
+      const id = symbolId(path, language, sym.kind, sym.qualifiedName);
       if (!sym.qualifiedName.includes('.')) {
-        insert(
-          fileId(path),
-          symbolId(path, language, sym.kind, sym.qualifiedName),
-          'defines',
-          'AST_EXACT',
-          1.0,
-          path,
-          sym.startLine,
-        );
+        // file -> top-level symbol
+        insert(fileId(path), id, 'defines', 'AST_EXACT', 1.0, path, sym.startLine);
+      } else {
+        // enclosing symbol -> member (class -> method, etc.)
+        const parentQualified = sym.qualifiedName.slice(0, sym.qualifiedName.lastIndexOf('.'));
+        const parent = byQualified.get(`${path}::${parentQualified}`);
+        if (parent) insert(parent.id, id, 'contains', 'AST_EXACT', 1.0, path, sym.startLine);
       }
     }
 
@@ -270,7 +270,7 @@ function rebuildEdges(
           break;
         }
         case 'references': {
-          for (const r of resolveName(rel.toName, path, byName, byQualified, TYPE_KINDS)) {
+          for (const r of resolveName(rel.toName, path, byName, byQualified, REF_KINDS)) {
             insert(fromId, r.targetId, 'references', r.provenance, r.confidence, path, rel.line);
           }
           break;
@@ -324,6 +324,7 @@ export async function indexRepo(store: GraphStore, opts: IndexOptions = {}): Pro
   }
 
   let edges = 0;
+  let edgesRebuilt = false;
   store.db.transaction(() => {
     applyFileChanges(store.db, store.repoId, plan);
     for (const change of plan.changes) {
@@ -342,6 +343,7 @@ export async function indexRepo(store: GraphStore, opts: IndexOptions = {}): Pro
     if (changed > 0 || opts.full) {
       edges = rebuildEdges(store, artifacts);
       bumpGraphRevision(store.db);
+      edgesRebuilt = true;
     } else {
       const row = store.db.get<{ n: number }>(
         `SELECT COUNT(*) AS n FROM edges WHERE repo_id = ?`,
@@ -350,6 +352,10 @@ export async function indexRepo(store: GraphStore, opts: IndexOptions = {}): Pro
       edges = row?.n ?? 0;
     }
   });
+
+  if (edgesRebuilt) {
+    analyzeGraph(store);
+  }
 
   const symbolCount =
     store.db.get<{ n: number }>(

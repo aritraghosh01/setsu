@@ -10,6 +10,8 @@
   "dependencies": {
     "@setsu-ai/core": "*",
     "@setsu-ai/parsers": "*",
-    "@setsu-ai/storage": "*"
+    "@setsu-ai/storage": "*",
+    "graphology": "^0.26.0",
+    "graphology-communities-louvain": "^2.0.2"
   }
 }

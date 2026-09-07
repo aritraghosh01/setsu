@@ -42,6 +42,12 @@
         "line": 1
       },
       {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "AuthService",
+        "line": 1
+      },
+      {
         "type": "calls",
         "fromSymbol": "AuthController.handleLogin",
         "toName": "authenticate",
@@ -114,9 +120,21 @@
         "line": 1
       },
       {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "UserService",
+        "line": 1
+      },
+      {
         "type": "imports",
         "fromSymbol": "",
         "toName": "../config",
+        "line": 2
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "config",
         "line": 2
       },
       {
@@ -183,9 +201,21 @@
         "line": 1
       },
       {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "CheckoutService",
+        "line": 1
+      },
+      {
         "type": "imports",
         "fromSymbol": "",
         "toName": "../orders/model",
+        "line": 2
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "Order",
         "line": 2
       },
       {
@@ -241,9 +271,21 @@
         "line": 1
       },
       {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "Order",
+        "line": 1
+      },
+      {
         "type": "imports",
         "fromSymbol": "",
         "toName": "../orders/validation",
+        "line": 2
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "validateOrder",
         "line": 2
       },
       {
@@ -253,15 +295,39 @@
         "line": 3
       },
       {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "PaymentGateway",
+        "line": 3
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "PaymentResult",
+        "line": 3
+      },
+      {
         "type": "imports",
         "fromSymbol": "",
         "toName": "../users/service",
         "line": 4
       },
       {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "UserService",
+        "line": 4
+      },
+      {
         "type": "imports",
         "fromSymbol": "",
         "toName": "../db/repository",
+        "line": 5
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "OrderRepository",
         "line": 5
       },
       {
@@ -402,9 +468,27 @@
         "line": 1
       },
       {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "User",
+        "line": 1
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "UserId",
+        "line": 1
+      },
+      {
         "type": "imports",
         "fromSymbol": "",
         "toName": "../orders/model",
+        "line": 2
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "Order",
         "line": 2
       },
       {
@@ -469,9 +553,21 @@
         "line": 1
       },
       {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "buildRoutes",
+        "line": 1
+      },
+      {
         "type": "imports",
         "fromSymbol": "",
         "toName": "./config",
+        "line": 2
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "config",
         "line": 2
       },
       {
@@ -519,6 +615,18 @@
         "type": "imports",
         "fromSymbol": "",
         "toName": "../users/model",
+        "line": 1
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "Money",
+        "line": 1
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "UserId",
         "line": 1
       }
     ],
@@ -568,9 +676,27 @@
         "line": 1
       },
       {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "Order",
+        "line": 1
+      },
+      {
         "type": "imports",
         "fromSymbol": "",
         "toName": "../users/model",
+        "line": 2
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "CustomerStatus",
+        "line": 2
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "User",
         "line": 2
       },
       {
@@ -631,6 +757,12 @@
         "type": "imports",
         "fromSymbol": "",
         "toName": "../users/model",
+        "line": 1
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "Money",
         "line": 1
       }
     ],
@@ -711,15 +843,39 @@
         "line": 1
       },
       {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "PaymentGateway",
+        "line": 1
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "PaymentResult",
+        "line": 1
+      },
+      {
         "type": "imports",
         "fromSymbol": "",
         "toName": "../users/model",
         "line": 2
       },
       {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "Money",
+        "line": 2
+      },
+      {
         "type": "imports",
         "fromSymbol": "",
         "toName": "../config",
+        "line": 3
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "config",
         "line": 3
       },
       {
@@ -782,9 +938,21 @@
         "line": 1
       },
       {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "CheckoutController",
+        "line": 1
+      },
+      {
         "type": "imports",
         "fromSymbol": "",
         "toName": "./auth/controller",
+        "line": 2
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "AuthController",
         "line": 2
       },
       {
@@ -794,9 +962,21 @@
         "line": 3
       },
       {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "CheckoutService",
+        "line": 3
+      },
+      {
         "type": "imports",
         "fromSymbol": "",
         "toName": "./auth/service",
+        "line": 4
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "AuthService",
         "line": 4
       },
       {
@@ -806,15 +986,39 @@
         "line": 5
       },
       {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "StripeAdapter",
+        "line": 5
+      },
+      {
         "type": "imports",
         "fromSymbol": "",
         "toName": "./users/service",
         "line": 6
       },
       {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "UserService",
+        "line": 6
+      },
+      {
         "type": "imports",
         "fromSymbol": "",
         "toName": "./db/repository",
+        "line": 7
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "UserRepository",
+        "line": 7
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "OrderRepository",
         "line": 7
       },
       {
@@ -981,9 +1185,33 @@
         "line": 1
       },
       {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "CustomerStatus",
+        "line": 1
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "User",
+        "line": 1
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "UserId",
+        "line": 1
+      },
+      {
         "type": "imports",
         "fromSymbol": "",
         "toName": "../db/repository",
+        "line": 2
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "UserRepository",
         "line": 2
       },
       {
@@ -1030,15 +1258,33 @@
         "line": 1
       },
       {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "AuthService",
+        "line": 1
+      },
+      {
         "type": "imports",
         "fromSymbol": "",
         "toName": "../src/users/service",
         "line": 2
       },
       {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "UserService",
+        "line": 2
+      },
+      {
         "type": "imports",
         "fromSymbol": "",
         "toName": "../src/db/repository",
+        "line": 3
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "UserRepository",
         "line": 3
       },
       {
@@ -1121,9 +1367,21 @@
         "line": 1
       },
       {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "CheckoutService",
+        "line": 1
+      },
+      {
         "type": "imports",
         "fromSymbol": "",
         "toName": "../src/users/service",
+        "line": 2
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "UserService",
         "line": 2
       },
       {
@@ -1133,15 +1391,39 @@
         "line": 3
       },
       {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "UserRepository",
+        "line": 3
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "OrderRepository",
+        "line": 3
+      },
+      {
         "type": "imports",
         "fromSymbol": "",
         "toName": "../src/users/model",
         "line": 4
       },
       {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "CustomerStatus",
+        "line": 4
+      },
+      {
         "type": "imports",
         "fromSymbol": "",
         "toName": "../src/payments/gateway",
+        "line": 5
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "PaymentGateway",
         "line": 5
       },
       {

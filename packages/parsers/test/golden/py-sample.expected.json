@@ -92,6 +92,18 @@
         "line": 3
       },
       {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "Invoice",
+        "line": 3
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "User",
+        "line": 3
+      },
+      {
         "type": "calls",
         "fromSymbol": "UserRepository.find_user",
         "toName": "get",
@@ -136,6 +148,24 @@
         "type": "imports",
         "fromSymbol": "",
         "toName": "app.routes",
+        "line": 3
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "build_services",
+        "line": 3
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "handle_login",
+        "line": 3
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "handle_pay",
         "line": 3
       },
       {
@@ -296,9 +326,21 @@
         "line": 3
       },
       {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "dataclass",
+        "line": 3
+      },
+      {
         "type": "imports",
         "fromSymbol": "",
         "toName": "enum",
+        "line": 4
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "Enum",
         "line": 4
       },
       {
@@ -365,15 +407,45 @@
         "line": 3
       },
       {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "InvoiceRepository",
+        "line": 3
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "UserRepository",
+        "line": 3
+      },
+      {
         "type": "imports",
         "fromSymbol": "",
         "toName": "app.services.auth",
         "line": 4
       },
       {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "AuthService",
+        "line": 4
+      },
+      {
         "type": "imports",
         "fromSymbol": "",
         "toName": "app.services.payment",
+        "line": 5
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "PaymentService",
+        "line": 5
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "StripeClient",
         "line": 5
       },
       {
@@ -488,6 +560,12 @@
         "type": "imports",
         "fromSymbol": "",
         "toName": "app.db",
+        "line": 5
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "UserRepository",
         "line": 5
       },
       {
@@ -608,9 +686,27 @@
         "line": 3
       },
       {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "InvoiceRepository",
+        "line": 3
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "UserRepository",
+        "line": 3
+      },
+      {
         "type": "imports",
         "fromSymbol": "",
         "toName": "app.validation",
+        "line": 4
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "validate_invoice",
         "line": 4
       },
       {
@@ -680,6 +776,24 @@
         "line": 3
       },
       {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "CustomerStatus",
+        "line": 3
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "Invoice",
+        "line": 3
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "User",
+        "line": 3
+      },
+      {
         "type": "extends",
         "fromSymbol": "ValidationError",
         "toName": "Exception",
@@ -723,9 +837,21 @@
         "line": 1
       },
       {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "UserRepository",
+        "line": 1
+      },
+      {
         "type": "imports",
         "fromSymbol": "",
         "toName": "app.services.auth",
+        "line": 2
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "AuthService",
         "line": 2
       },
       {
@@ -772,15 +898,57 @@
         "line": 1
       },
       {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "InvoiceRepository",
+        "line": 1
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "UserRepository",
+        "line": 1
+      },
+      {
         "type": "imports",
         "fromSymbol": "",
         "toName": "app.models",
         "line": 2
       },
       {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "CustomerStatus",
+        "line": 2
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "Invoice",
+        "line": 2
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "User",
+        "line": 2
+      },
+      {
         "type": "imports",
         "fromSymbol": "",
         "toName": "app.services.payment",
+        "line": 3
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "PaymentService",
+        "line": 3
+      },
+      {
+        "type": "references",
+        "fromSymbol": "",
+        "toName": "StripeClient",
         "line": 3
       },
       {
