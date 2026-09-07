@@ -12,7 +12,7 @@ export default tseslint.config(
     },
   },
   {
-    files: ['scripts/**/*.mjs', 'scripts/**/*.js'],
+    files: ['scripts/**/*.mjs', 'scripts/**/*.js', 'benchmarks/**/*.mjs'],
     languageOptions: {
       globals: {
         console: 'readonly',
@@ -20,6 +20,8 @@ export default tseslint.config(
         URL: 'readonly',
         fetch: 'readonly',
         Buffer: 'readonly',
+        setTimeout: 'readonly',
+        clearTimeout: 'readonly',
       },
     },
     rules: {
