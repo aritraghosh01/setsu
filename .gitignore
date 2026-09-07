@@ -1,0 +1,10 @@
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+.setsu/
+*.log
+.env
+.env.*
+.DS_Store
+benchmarks/claude-e2e/results/*.raw.json

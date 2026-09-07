@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "paths": {
+      "@setsu-ai/core": ["./packages/core/src/index.ts"],
+      "@setsu-ai/storage": ["./packages/storage/src/index.ts"],
+      "@setsu-ai/parsers": ["./packages/parsers/src/index.ts"],
+      "@setsu-ai/graph": ["./packages/graph/src/index.ts"],
+      "@setsu-ai/retrieval": ["./packages/retrieval/src/index.ts"],
+      "@setsu-ai/agents": ["./packages/agents/src/index.ts"],
+      "@setsu-ai/learning": ["./packages/learning/src/index.ts"],
+      "@setsu-ai/mcp": ["./packages/mcp/src/index.ts"]
+    }
+  },
+  "include": ["packages/*/src/**/*.ts", "packages/*/test/**/*.ts", "scripts/**/*.ts"]
+}

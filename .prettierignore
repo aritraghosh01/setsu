@@ -1,0 +1,6 @@
+node_modules
+dist
+docs/SETSU_SCOUT_DEVELOPMENT_SPEC.md
+packages/parsers/wasm
+CHANGELOG.md
+fixtures
