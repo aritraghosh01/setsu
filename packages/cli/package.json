@@ -26,6 +26,7 @@
     "@setsu-ai/core": "*",
     "@setsu-ai/mcp": "*",
     "@setsu-ai/graph": "*",
+    "@setsu-ai/learning": "*",
     "@setsu-ai/parsers": "*",
     "@setsu-ai/retrieval": "*",
     "@setsu-ai/storage": "*",

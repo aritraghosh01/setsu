@@ -17,6 +17,7 @@ import { serveStdio } from '@setsu-ai/mcp';
 import { runAdapters } from './commands/adapters-cmd.js';
 import { runDoctor, runScan } from './commands/doctor-cmd.js';
 import { runOptimize } from './commands/optimize-cmd.js';
+import { runLearn, runFeedback, runPrivacy } from './commands/learn-cmd.js';
 
 declare const __SETSU_VERSION__: string;
 const version = typeof __SETSU_VERSION__ === 'string' ? __SETSU_VERSION__ : '0.0.0-dev';
@@ -185,6 +186,32 @@ graph
   .option('--repo <root>', 'repository root', process.cwd())
   .action(async (opts: { repo: string }) => {
     await runGraphExport(opts);
+  });
+
+program
+  .command('learn')
+  .description('Show learned strategy scores and recommendation acceptance')
+  .option('--repo <root>', 'repository root', process.cwd())
+  .action(async (opts: { repo: string }) => {
+    await runLearn(opts);
+  });
+
+program
+  .command('feedback <value>')
+  .description('Rate the latest context pack: good | bad')
+  .option('--repo <root>', 'repository root', process.cwd())
+  .option('--note <text>', 'optional short note')
+  .action(async (value: string, opts: { repo: string; note?: string }) => {
+    await runFeedback(value, opts);
+  });
+
+program
+  .command('privacy <action>')
+  .description('status | inspect | export | purge | consent | revoke')
+  .option('--yes', 'confirm destructive actions')
+  .option('--scope <scope>', 'consent scope, e.g. memory:read-derived-patterns')
+  .action(async (action: string, opts: { yes?: boolean; scope?: string }) => {
+    await runPrivacy(action, opts);
   });
 
 const mcp = program.command('mcp').description('Model Context Protocol server');

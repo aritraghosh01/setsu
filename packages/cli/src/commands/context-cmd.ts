@@ -1,5 +1,6 @@
-import { openGraphDb } from '@setsu-ai/storage';
+import { openGraphDb, openUsageDb } from '@setsu-ai/storage';
 import { buildContext, type ContextOptions } from '@setsu-ai/retrieval';
+import { recordRetrievalOutcome } from '@setsu-ai/learning';
 
 export interface ContextCmdOptions {
   repo: string;
@@ -18,6 +19,23 @@ export async function runContext(query: string, opts: ContextCmdOptions): Promis
       options.mode = opts.mode as NonNullable<ContextOptions['mode']>;
     }
     const { pack, explain } = await buildContext(store, query, options);
+
+    // Feed the learning loop (spec section 31); setsu feedback refines success.
+    try {
+      const usage = openUsageDb();
+      try {
+        recordRetrievalOutcome(usage, store.repoId, {
+          taskClass: explain.taskClass,
+          strategy: explain.strategy,
+          usedTokens: pack.budget.usedEstimatedTokens,
+          budget: pack.budget.maxEstimatedTokens,
+        });
+      } finally {
+        usage.close();
+      }
+    } catch {
+      // Learning must never break retrieval.
+    }
 
     if (opts.json) {
       console.log(JSON.stringify({ ...pack, evidenceQuality: pack.quality }, null, 2));
