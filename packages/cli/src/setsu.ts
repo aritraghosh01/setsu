@@ -14,6 +14,7 @@ import {
 import { runContext } from './commands/context-cmd.js';
 import { runWatch } from './commands/watch-cmd.js';
 import { serveStdio } from '@setsu-ai/mcp';
+import { runAdapters } from './commands/adapters-cmd.js';
 
 declare const __SETSU_VERSION__: string;
 const version = typeof __SETSU_VERSION__ === 'string' ? __SETSU_VERSION__ : '0.0.0-dev';
@@ -33,10 +34,24 @@ program
 
 program
   .command('init')
-  .description('Initialize SETSU for this repository (creates .setsu/)')
+  .description('Initialize SETSU: detect agents, build the graph, offer MCP install')
+  .option('--repo <root>', 'repository root', process.cwd())
+  .option('--yes', 'accept all defaults (MCP install + guidance)')
+  .option('--mcp', 'register the SETSU MCP server for detected agents')
+  .option('--no-mcp', 'skip MCP registration')
+  .option('--guidance', 'add graph-first guidance to instruction files')
+  .option('--no-guidance', 'skip guidance block')
+  .option('--skip-index', 'do not build the initial graph')
+  .action(async (opts: { repo: string; yes?: boolean; mcp?: boolean; guidance?: boolean; skipIndex?: boolean }) => {
+    await runInit(opts.repo, opts);
+  });
+
+program
+  .command('adapters')
+  .description('Show detected AI agents and their instruction inventory')
   .option('--repo <root>', 'repository root', process.cwd())
   .action(async (opts: { repo: string }) => {
-    await runInit(opts.repo);
+    await runAdapters(opts);
   });
 
 program

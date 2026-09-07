@@ -8,7 +8,7 @@ describe('setsu init', () => {
   it('creates .setsu with config.json and .gitignore', async () => {
     const dir = await mkdtemp(join(tmpdir(), 'setsu-init-'));
     try {
-      const result = await runInit(dir);
+      const result = await runInit(dir, { skipIndex: true });
       expect(result.createdConfig).toBe(true);
 
       const config = JSON.parse(await readFile(join(dir, '.setsu', 'config.json'), 'utf8'));
@@ -27,10 +27,10 @@ describe('setsu init', () => {
   it('does not overwrite an existing config', async () => {
     const dir = await mkdtemp(join(tmpdir(), 'setsu-init-'));
     try {
-      await runInit(dir);
+      await runInit(dir, { skipIndex: true });
       const configPath = join(dir, '.setsu', 'config.json');
       const before = await readFile(configPath, 'utf8');
-      const second = await runInit(dir);
+      const second = await runInit(dir, { skipIndex: true });
       expect(second.createdConfig).toBe(false);
       expect(await readFile(configPath, 'utf8')).toBe(before);
     } finally {

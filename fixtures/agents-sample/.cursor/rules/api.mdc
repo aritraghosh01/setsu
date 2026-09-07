@@ -1,0 +1,5 @@
+---
+globs: src/api/**/*.ts
+---
+
+API handlers must validate input with zod before touching the database.
