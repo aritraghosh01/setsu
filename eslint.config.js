@@ -14,7 +14,13 @@ export default tseslint.config(
   {
     files: ['scripts/**/*.mjs', 'scripts/**/*.js'],
     languageOptions: {
-      globals: { console: 'readonly', process: 'readonly', URL: 'readonly' },
+      globals: {
+        console: 'readonly',
+        process: 'readonly',
+        URL: 'readonly',
+        fetch: 'readonly',
+        Buffer: 'readonly',
+      },
     },
     rules: {
       '@typescript-eslint/no-require-imports': 'off',

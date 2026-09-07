@@ -1,0 +1,1186 @@
+{
+  "src/auth/controller.ts": {
+    "language": "typescript",
+    "parserVersion": "ts-v1",
+    "symbols": [
+      {
+        "name": "AuthController",
+        "qualifiedName": "AuthController",
+        "kind": "class",
+        "startLine": 3,
+        "endLine": 11,
+        "signature": "class AuthController {",
+        "bodyHash": "b879494c0f543756",
+        "exported": true
+      },
+      {
+        "name": "constructor",
+        "qualifiedName": "AuthController.constructor",
+        "kind": "method",
+        "startLine": 4,
+        "endLine": 4,
+        "signature": "constructor(private readonly service: AuthService) {}",
+        "bodyHash": "69fbea3ef88562ca",
+        "exported": false
+      },
+      {
+        "name": "handleLogin",
+        "qualifiedName": "AuthController.handleLogin",
+        "kind": "method",
+        "startLine": 6,
+        "endLine": 10,
+        "signature": "async handleLogin(body: { email: string; password: string }): Promise<{ status: number; token?: string }> {",
+        "bodyHash": "8fdfcaf3c3e2834c",
+        "exported": false
+      }
+    ],
+    "relations": [
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "./service",
+        "line": 1
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "AuthController.handleLogin",
+        "toName": "authenticate",
+        "line": 7
+      }
+    ],
+    "hadErrors": false
+  },
+  "src/auth/service.ts": {
+    "language": "typescript",
+    "parserVersion": "ts-v1",
+    "symbols": [
+      {
+        "name": "Session",
+        "qualifiedName": "Session",
+        "kind": "interface",
+        "startLine": 4,
+        "endLine": 8,
+        "signature": "interface Session {",
+        "bodyHash": "049d4b1fda670242",
+        "exported": true
+      },
+      {
+        "name": "AuthService",
+        "qualifiedName": "AuthService",
+        "kind": "class",
+        "startLine": 10,
+        "endLine": 29,
+        "signature": "class AuthService {",
+        "bodyHash": "9c31743277cd9cd2",
+        "exported": true
+      },
+      {
+        "name": "constructor",
+        "qualifiedName": "AuthService.constructor",
+        "kind": "method",
+        "startLine": 11,
+        "endLine": 11,
+        "signature": "constructor(private readonly userService: UserService) {}",
+        "bodyHash": "170a655a9ce8938a",
+        "exported": false
+      },
+      {
+        "name": "authenticate",
+        "qualifiedName": "AuthService.authenticate",
+        "kind": "method",
+        "startLine": 14,
+        "endLine": 24,
+        "signature": "async authenticate(email: string, password: string): Promise<Session | undefined> {",
+        "bodyHash": "7a322f50f5b352d8",
+        "exported": false,
+        "doc": "Validates credentials and mints a session token."
+      },
+      {
+        "name": "hashPassword",
+        "qualifiedName": "AuthService.hashPassword",
+        "kind": "method",
+        "startLine": 26,
+        "endLine": 28,
+        "signature": "private hashPassword(password: string): string {",
+        "bodyHash": "6d3a508486344056",
+        "exported": false
+      }
+    ],
+    "relations": [
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "../users/service",
+        "line": 1
+      },
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "../config",
+        "line": 2
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "AuthService.authenticate",
+        "toName": "hashPassword",
+        "line": 15
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "AuthService.authenticate",
+        "toName": "findUser",
+        "line": 17
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "AuthService.authenticate",
+        "toName": "Date.now",
+        "line": 22
+      }
+    ],
+    "hadErrors": false
+  },
+  "src/checkout/controller.ts": {
+    "language": "typescript",
+    "parserVersion": "ts-v1",
+    "symbols": [
+      {
+        "name": "CheckoutController",
+        "qualifiedName": "CheckoutController",
+        "kind": "class",
+        "startLine": 4,
+        "endLine": 15,
+        "signature": "class CheckoutController {",
+        "bodyHash": "8e6b7ce076e9aba8",
+        "exported": true
+      },
+      {
+        "name": "constructor",
+        "qualifiedName": "CheckoutController.constructor",
+        "kind": "method",
+        "startLine": 5,
+        "endLine": 5,
+        "signature": "constructor(private readonly service: CheckoutService) {}",
+        "bodyHash": "6c58fb10bf785e79",
+        "exported": false
+      },
+      {
+        "name": "handleCheckout",
+        "qualifiedName": "CheckoutController.handleCheckout",
+        "kind": "method",
+        "startLine": 7,
+        "endLine": 14,
+        "signature": "async handleCheckout(body: unknown): Promise<{ status: number; paymentId?: string }> {",
+        "bodyHash": "81be98983ba997f8",
+        "exported": false
+      }
+    ],
+    "relations": [
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "./service",
+        "line": 1
+      },
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "../orders/model",
+        "line": 2
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "CheckoutController.handleCheckout",
+        "toName": "checkout",
+        "line": 9
+      }
+    ],
+    "hadErrors": false
+  },
+  "src/checkout/service.ts": {
+    "language": "typescript",
+    "parserVersion": "ts-v1",
+    "symbols": [
+      {
+        "name": "CheckoutService",
+        "qualifiedName": "CheckoutService",
+        "kind": "class",
+        "startLine": 8,
+        "endLine": 27,
+        "signature": "class CheckoutService {",
+        "bodyHash": "7978d512a6a1cfa5",
+        "exported": true,
+        "doc": "Orchestrates checkout: validate, charge, persist."
+      },
+      {
+        "name": "constructor",
+        "qualifiedName": "CheckoutService.constructor",
+        "kind": "method",
+        "startLine": 9,
+        "endLine": 13,
+        "signature": "constructor(",
+        "bodyHash": "4d9b88c1e06a64ae",
+        "exported": false
+      },
+      {
+        "name": "checkout",
+        "qualifiedName": "CheckoutService.checkout",
+        "kind": "method",
+        "startLine": 15,
+        "endLine": 26,
+        "signature": "async checkout(order: Order): Promise<PaymentResult> {",
+        "bodyHash": "a41eeaef714dba64",
+        "exported": false
+      }
+    ],
+    "relations": [
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "../orders/model",
+        "line": 1
+      },
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "../orders/validation",
+        "line": 2
+      },
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "../payments/gateway",
+        "line": 3
+      },
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "../users/service",
+        "line": 4
+      },
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "../db/repository",
+        "line": 5
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "CheckoutService.checkout",
+        "toName": "findUser",
+        "line": 16
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "CheckoutService.checkout",
+        "toName": "validateOrder",
+        "line": 20
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "CheckoutService.checkout",
+        "toName": "charge",
+        "line": 21
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "CheckoutService.checkout",
+        "toName": "saveOrder",
+        "line": 23
+      }
+    ],
+    "hadErrors": false
+  },
+  "src/config.ts": {
+    "language": "typescript",
+    "parserVersion": "ts-v1",
+    "symbols": [
+      {
+        "name": "config",
+        "qualifiedName": "config",
+        "kind": "variable",
+        "startLine": 1,
+        "endLine": 5,
+        "signature": "config = {",
+        "bodyHash": "4029a0e5f3304f2a",
+        "exported": true
+      }
+    ],
+    "relations": [],
+    "hadErrors": false
+  },
+  "src/db/repository.ts": {
+    "language": "typescript",
+    "parserVersion": "ts-v1",
+    "symbols": [
+      {
+        "name": "UserRepository",
+        "qualifiedName": "UserRepository",
+        "kind": "class",
+        "startLine": 4,
+        "endLine": 14,
+        "signature": "class UserRepository {",
+        "bodyHash": "10d8ec04fc0a3baa",
+        "exported": true
+      },
+      {
+        "name": "users",
+        "qualifiedName": "UserRepository.users",
+        "kind": "property",
+        "startLine": 5,
+        "endLine": 5,
+        "signature": "private readonly users = new Map<UserId, User>()",
+        "bodyHash": "5a906cda059137d1",
+        "exported": false
+      },
+      {
+        "name": "findUser",
+        "qualifiedName": "UserRepository.findUser",
+        "kind": "method",
+        "startLine": 7,
+        "endLine": 9,
+        "signature": "async findUser(id: UserId): Promise<User | undefined> {",
+        "bodyHash": "6dcfeb03ff93736b",
+        "exported": false
+      },
+      {
+        "name": "saveUser",
+        "qualifiedName": "UserRepository.saveUser",
+        "kind": "method",
+        "startLine": 11,
+        "endLine": 13,
+        "signature": "async saveUser(user: User): Promise<void> {",
+        "bodyHash": "c0470c1f0a2d3483",
+        "exported": false
+      },
+      {
+        "name": "OrderRepository",
+        "qualifiedName": "OrderRepository",
+        "kind": "class",
+        "startLine": 16,
+        "endLine": 26,
+        "signature": "class OrderRepository {",
+        "bodyHash": "9f105731767e33d6",
+        "exported": true
+      },
+      {
+        "name": "orders",
+        "qualifiedName": "OrderRepository.orders",
+        "kind": "property",
+        "startLine": 17,
+        "endLine": 17,
+        "signature": "private readonly orders = new Map<string, Order>()",
+        "bodyHash": "7239dc660d3f8e8d",
+        "exported": false
+      },
+      {
+        "name": "findOrder",
+        "qualifiedName": "OrderRepository.findOrder",
+        "kind": "method",
+        "startLine": 19,
+        "endLine": 21,
+        "signature": "async findOrder(id: string): Promise<Order | undefined> {",
+        "bodyHash": "3120eabd185255c5",
+        "exported": false
+      },
+      {
+        "name": "saveOrder",
+        "qualifiedName": "OrderRepository.saveOrder",
+        "kind": "method",
+        "startLine": 23,
+        "endLine": 25,
+        "signature": "async saveOrder(order: Order): Promise<void> {",
+        "bodyHash": "95806808e542b5d2",
+        "exported": false
+      }
+    ],
+    "relations": [
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "../users/model",
+        "line": 1
+      },
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "../orders/model",
+        "line": 2
+      },
+      {
+        "type": "references",
+        "fromSymbol": "UserRepository",
+        "toName": "Map",
+        "line": 5
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "UserRepository.findUser",
+        "toName": "get",
+        "line": 8
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "UserRepository.saveUser",
+        "toName": "set",
+        "line": 12
+      },
+      {
+        "type": "references",
+        "fromSymbol": "OrderRepository",
+        "toName": "Map",
+        "line": 17
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "OrderRepository.findOrder",
+        "toName": "get",
+        "line": 20
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "OrderRepository.saveOrder",
+        "toName": "set",
+        "line": 24
+      }
+    ],
+    "hadErrors": false
+  },
+  "src/index.ts": {
+    "language": "typescript",
+    "parserVersion": "ts-v1",
+    "symbols": [
+      {
+        "name": "main",
+        "qualifiedName": "main",
+        "kind": "function",
+        "startLine": 4,
+        "endLine": 7,
+        "signature": "function main(): void {",
+        "bodyHash": "0736f2a5ccefdfc3",
+        "exported": true
+      }
+    ],
+    "relations": [
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "./routes",
+        "line": 1
+      },
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "./config",
+        "line": 2
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "main",
+        "toName": "buildRoutes",
+        "line": 5
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "main",
+        "toName": "console.log",
+        "line": 6
+      }
+    ],
+    "hadErrors": false
+  },
+  "src/orders/model.ts": {
+    "language": "typescript",
+    "parserVersion": "ts-v1",
+    "symbols": [
+      {
+        "name": "OrderLine",
+        "qualifiedName": "OrderLine",
+        "kind": "interface",
+        "startLine": 3,
+        "endLine": 7,
+        "signature": "interface OrderLine {",
+        "bodyHash": "2e32ef4d87185872",
+        "exported": true
+      },
+      {
+        "name": "Order",
+        "qualifiedName": "Order",
+        "kind": "interface",
+        "startLine": 9,
+        "endLine": 14,
+        "signature": "interface Order {",
+        "bodyHash": "1e727754c0259ba1",
+        "exported": true
+      }
+    ],
+    "relations": [
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "../users/model",
+        "line": 1
+      }
+    ],
+    "hadErrors": false
+  },
+  "src/orders/validation.ts": {
+    "language": "typescript",
+    "parserVersion": "ts-v1",
+    "symbols": [
+      {
+        "name": "OrderValidationError",
+        "qualifiedName": "OrderValidationError",
+        "kind": "class",
+        "startLine": 4,
+        "endLine": 9,
+        "signature": "class OrderValidationError extends Error {",
+        "bodyHash": "8a5a7aa2cfb52d80",
+        "exported": true
+      },
+      {
+        "name": "constructor",
+        "qualifiedName": "OrderValidationError.constructor",
+        "kind": "method",
+        "startLine": 5,
+        "endLine": 8,
+        "signature": "constructor(message: string) {",
+        "bodyHash": "1f6c58c67b2b6a62",
+        "exported": false
+      },
+      {
+        "name": "validateOrder",
+        "qualifiedName": "validateOrder",
+        "kind": "function",
+        "startLine": 12,
+        "endLine": 22,
+        "signature": "function validateOrder(order: Order, user: User): void {",
+        "bodyHash": "90b51cbde3beceb3",
+        "exported": true,
+        "doc": "Orders from suspended or closed customers must never reach payment."
+      }
+    ],
+    "relations": [
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "./model",
+        "line": 1
+      },
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "../users/model",
+        "line": 2
+      },
+      {
+        "type": "extends",
+        "fromSymbol": "OrderValidationError",
+        "toName": "Error",
+        "line": 4
+      },
+      {
+        "type": "references",
+        "fromSymbol": "validateOrder",
+        "toName": "OrderValidationError",
+        "line": 14
+      },
+      {
+        "type": "references",
+        "fromSymbol": "validateOrder",
+        "toName": "OrderValidationError",
+        "line": 17
+      },
+      {
+        "type": "references",
+        "fromSymbol": "validateOrder",
+        "toName": "OrderValidationError",
+        "line": 20
+      }
+    ],
+    "hadErrors": false
+  },
+  "src/payments/gateway.ts": {
+    "language": "typescript",
+    "parserVersion": "ts-v1",
+    "symbols": [
+      {
+        "name": "PaymentGateway",
+        "qualifiedName": "PaymentGateway",
+        "kind": "interface",
+        "startLine": 4,
+        "endLine": 7,
+        "signature": "interface PaymentGateway {",
+        "bodyHash": "560ee64220989864",
+        "exported": true,
+        "doc": "Abstraction over external payment providers."
+      },
+      {
+        "name": "PaymentResult",
+        "qualifiedName": "PaymentResult",
+        "kind": "interface",
+        "startLine": 9,
+        "endLine": 13,
+        "signature": "interface PaymentResult {",
+        "bodyHash": "d82b9e04a5e028dd",
+        "exported": true
+      }
+    ],
+    "relations": [
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "../users/model",
+        "line": 1
+      }
+    ],
+    "hadErrors": false
+  },
+  "src/payments/stripe-adapter.ts": {
+    "language": "typescript",
+    "parserVersion": "ts-v1",
+    "symbols": [
+      {
+        "name": "StripeAdapter",
+        "qualifiedName": "StripeAdapter",
+        "kind": "class",
+        "startLine": 6,
+        "endLine": 31,
+        "signature": "class StripeAdapter implements PaymentGateway {",
+        "bodyHash": "d68f139d443dab3a",
+        "exported": true,
+        "doc": "Stripe implementation of the payment gateway."
+      },
+      {
+        "name": "apiKey",
+        "qualifiedName": "StripeAdapter.apiKey",
+        "kind": "property",
+        "startLine": 7,
+        "endLine": 7,
+        "signature": "private readonly apiKey = config.stripeApiKey",
+        "bodyHash": "a8a1c303b6758d34",
+        "exported": false
+      },
+      {
+        "name": "charge",
+        "qualifiedName": "StripeAdapter.charge",
+        "kind": "method",
+        "startLine": 9,
+        "endLine": 13,
+        "signature": "async charge(amount: Money, customerId: string): Promise<PaymentResult> {",
+        "bodyHash": "b0fb2ea1ed40e6bd",
+        "exported": false
+      },
+      {
+        "name": "refund",
+        "qualifiedName": "StripeAdapter.refund",
+        "kind": "method",
+        "startLine": 15,
+        "endLine": 18,
+        "signature": "async refund(paymentId: string): Promise<PaymentResult> {",
+        "bodyHash": "ade06bf95cb63c7d",
+        "exported": false
+      },
+      {
+        "name": "idempotencyKeyFor",
+        "qualifiedName": "StripeAdapter.idempotencyKeyFor",
+        "kind": "method",
+        "startLine": 21,
+        "endLine": 23,
+        "signature": "private idempotencyKeyFor(customerId: string, amount: Money): string {",
+        "bodyHash": "f0e462f7b2a86c23",
+        "exported": false,
+        "doc": "Idempotency: retries of the same charge must not double-bill."
+      },
+      {
+        "name": "post",
+        "qualifiedName": "StripeAdapter.post",
+        "kind": "method",
+        "startLine": 25,
+        "endLine": 30,
+        "signature": "private async post(path: string, body: unknown): Promise<{ ok: boolean; id: string }> {",
+        "bodyHash": "b183c4770409d483",
+        "exported": false
+      }
+    ],
+    "relations": [
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "./gateway",
+        "line": 1
+      },
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "../users/model",
+        "line": 2
+      },
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "../config",
+        "line": 3
+      },
+      {
+        "type": "implements",
+        "fromSymbol": "StripeAdapter",
+        "toName": "PaymentGateway",
+        "line": 6
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "StripeAdapter.charge",
+        "toName": "idempotencyKeyFor",
+        "line": 10
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "StripeAdapter.charge",
+        "toName": "post",
+        "line": 11
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "StripeAdapter.refund",
+        "toName": "post",
+        "line": 16
+      }
+    ],
+    "hadErrors": false
+  },
+  "src/routes.ts": {
+    "language": "typescript",
+    "parserVersion": "ts-v1",
+    "symbols": [
+      {
+        "name": "Route",
+        "qualifiedName": "Route",
+        "kind": "interface",
+        "startLine": 9,
+        "endLine": 13,
+        "signature": "interface Route {",
+        "bodyHash": "035ea276205bfbad",
+        "exported": true
+      },
+      {
+        "name": "buildRoutes",
+        "qualifiedName": "buildRoutes",
+        "kind": "function",
+        "startLine": 15,
+        "endLine": 33,
+        "signature": "function buildRoutes(): Route[] {",
+        "bodyHash": "2a3592660c27a3ba",
+        "exported": true
+      }
+    ],
+    "relations": [
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "./checkout/controller",
+        "line": 1
+      },
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "./auth/controller",
+        "line": 2
+      },
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "./checkout/service",
+        "line": 3
+      },
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "./auth/service",
+        "line": 4
+      },
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "./payments/stripe-adapter",
+        "line": 5
+      },
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "./users/service",
+        "line": 6
+      },
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "./db/repository",
+        "line": 7
+      },
+      {
+        "type": "references",
+        "fromSymbol": "buildRoutes",
+        "toName": "UserRepository",
+        "line": 16
+      },
+      {
+        "type": "references",
+        "fromSymbol": "buildRoutes",
+        "toName": "OrderRepository",
+        "line": 17
+      },
+      {
+        "type": "references",
+        "fromSymbol": "buildRoutes",
+        "toName": "UserService",
+        "line": 18
+      },
+      {
+        "type": "references",
+        "fromSymbol": "buildRoutes",
+        "toName": "StripeAdapter",
+        "line": 19
+      },
+      {
+        "type": "references",
+        "fromSymbol": "buildRoutes",
+        "toName": "CheckoutService",
+        "line": 20
+      },
+      {
+        "type": "references",
+        "fromSymbol": "buildRoutes",
+        "toName": "CheckoutController",
+        "line": 21
+      },
+      {
+        "type": "references",
+        "fromSymbol": "buildRoutes",
+        "toName": "AuthService",
+        "line": 22
+      },
+      {
+        "type": "references",
+        "fromSymbol": "buildRoutes",
+        "toName": "AuthController",
+        "line": 23
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "buildRoutes",
+        "toName": "checkoutController.handleCheckout",
+        "line": 26
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "buildRoutes",
+        "toName": "authController.handleLogin",
+        "line": 30
+      }
+    ],
+    "hadErrors": false
+  },
+  "src/users/model.ts": {
+    "language": "typescript",
+    "parserVersion": "ts-v1",
+    "symbols": [
+      {
+        "name": "Money",
+        "qualifiedName": "Money",
+        "kind": "interface",
+        "startLine": 1,
+        "endLine": 4,
+        "signature": "interface Money {",
+        "bodyHash": "872ad2d35f4e82bc",
+        "exported": true
+      },
+      {
+        "name": "CustomerStatus",
+        "qualifiedName": "CustomerStatus",
+        "kind": "enum",
+        "startLine": 6,
+        "endLine": 10,
+        "signature": "enum CustomerStatus {",
+        "bodyHash": "6c67a12f9c98133f",
+        "exported": true
+      },
+      {
+        "name": "User",
+        "qualifiedName": "User",
+        "kind": "interface",
+        "startLine": 12,
+        "endLine": 16,
+        "signature": "interface User {",
+        "bodyHash": "613d54312f758dc5",
+        "exported": true
+      },
+      {
+        "name": "UserId",
+        "qualifiedName": "UserId",
+        "kind": "type",
+        "startLine": 18,
+        "endLine": 18,
+        "signature": "type UserId = User['id'];",
+        "bodyHash": "71d42a12f82c0d89",
+        "exported": true
+      }
+    ],
+    "relations": [],
+    "hadErrors": false
+  },
+  "src/users/service.ts": {
+    "language": "typescript",
+    "parserVersion": "ts-v1",
+    "symbols": [
+      {
+        "name": "UserService",
+        "qualifiedName": "UserService",
+        "kind": "class",
+        "startLine": 4,
+        "endLine": 17,
+        "signature": "class UserService {",
+        "bodyHash": "191f107df72086a1",
+        "exported": true
+      },
+      {
+        "name": "constructor",
+        "qualifiedName": "UserService.constructor",
+        "kind": "method",
+        "startLine": 5,
+        "endLine": 5,
+        "signature": "constructor(private readonly repository: UserRepository) {}",
+        "bodyHash": "e2ba19eb47b5cae1",
+        "exported": false
+      },
+      {
+        "name": "findUser",
+        "qualifiedName": "UserService.findUser",
+        "kind": "method",
+        "startLine": 7,
+        "endLine": 9,
+        "signature": "async findUser(id: UserId): Promise<User | undefined> {",
+        "bodyHash": "dc2c89d7013179ec",
+        "exported": false
+      },
+      {
+        "name": "suspend",
+        "qualifiedName": "UserService.suspend",
+        "kind": "method",
+        "startLine": 11,
+        "endLine": 16,
+        "signature": "async suspend(id: UserId): Promise<void> {",
+        "bodyHash": "03ce4691b8ed7475",
+        "exported": false
+      }
+    ],
+    "relations": [
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "./model",
+        "line": 1
+      },
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "../db/repository",
+        "line": 2
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "UserService.findUser",
+        "toName": "findUser",
+        "line": 8
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "UserService.suspend",
+        "toName": "findUser",
+        "line": 12
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "UserService.suspend",
+        "toName": "saveUser",
+        "line": 15
+      }
+    ],
+    "hadErrors": false
+  },
+  "tests/auth.test.ts": {
+    "language": "typescript",
+    "parserVersion": "ts-v1",
+    "symbols": [
+      {
+        "name": "testLoginUnknownUserFails",
+        "qualifiedName": "testLoginUnknownUserFails",
+        "kind": "function",
+        "startLine": 5,
+        "endLine": 9,
+        "signature": "async function testLoginUnknownUserFails(): Promise<boolean> {",
+        "bodyHash": "9b86d9fedd21c7fc",
+        "exported": true
+      }
+    ],
+    "relations": [
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "../src/auth/service",
+        "line": 1
+      },
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "../src/users/service",
+        "line": 2
+      },
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "../src/db/repository",
+        "line": 3
+      },
+      {
+        "type": "references",
+        "fromSymbol": "testLoginUnknownUserFails",
+        "toName": "AuthService",
+        "line": 6
+      },
+      {
+        "type": "references",
+        "fromSymbol": "testLoginUnknownUserFails",
+        "toName": "UserService",
+        "line": 6
+      },
+      {
+        "type": "references",
+        "fromSymbol": "testLoginUnknownUserFails",
+        "toName": "UserRepository",
+        "line": 6
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "testLoginUnknownUserFails",
+        "toName": "service.authenticate",
+        "line": 7
+      }
+    ],
+    "hadErrors": false
+  },
+  "tests/checkout.test.ts": {
+    "language": "typescript",
+    "parserVersion": "ts-v1",
+    "symbols": [
+      {
+        "name": "fakeGateway",
+        "qualifiedName": "fakeGateway",
+        "kind": "variable",
+        "startLine": 7,
+        "endLine": 14,
+        "signature": "fakeGateway: PaymentGateway = {",
+        "bodyHash": "2f5897cfb3c33881",
+        "exported": false
+      },
+      {
+        "name": "charge",
+        "qualifiedName": "charge",
+        "kind": "method",
+        "startLine": 8,
+        "endLine": 10,
+        "signature": "async charge() {",
+        "bodyHash": "3c1633d3ae1a3362",
+        "exported": false
+      },
+      {
+        "name": "refund",
+        "qualifiedName": "refund",
+        "kind": "method",
+        "startLine": 11,
+        "endLine": 13,
+        "signature": "async refund() {",
+        "bodyHash": "e3f8376eee632d02",
+        "exported": false
+      },
+      {
+        "name": "testCheckoutChargesActiveCustomer",
+        "qualifiedName": "testCheckoutChargesActiveCustomer",
+        "kind": "function",
+        "startLine": 16,
+        "endLine": 27,
+        "signature": "async function testCheckoutChargesActiveCustomer(): Promise<boolean> {",
+        "bodyHash": "f947dac0f827c6e5",
+        "exported": true
+      }
+    ],
+    "relations": [
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "../src/checkout/service",
+        "line": 1
+      },
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "../src/users/service",
+        "line": 2
+      },
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "../src/db/repository",
+        "line": 3
+      },
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "../src/users/model",
+        "line": 4
+      },
+      {
+        "type": "imports",
+        "fromSymbol": "",
+        "toName": "../src/payments/gateway",
+        "line": 5
+      },
+      {
+        "type": "references",
+        "fromSymbol": "testCheckoutChargesActiveCustomer",
+        "toName": "UserRepository",
+        "line": 17
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "testCheckoutChargesActiveCustomer",
+        "toName": "users.saveUser",
+        "line": 18
+      },
+      {
+        "type": "references",
+        "fromSymbol": "testCheckoutChargesActiveCustomer",
+        "toName": "CheckoutService",
+        "line": 19
+      },
+      {
+        "type": "references",
+        "fromSymbol": "testCheckoutChargesActiveCustomer",
+        "toName": "UserService",
+        "line": 19
+      },
+      {
+        "type": "references",
+        "fromSymbol": "testCheckoutChargesActiveCustomer",
+        "toName": "OrderRepository",
+        "line": 19
+      },
+      {
+        "type": "calls",
+        "fromSymbol": "testCheckoutChargesActiveCustomer",
+        "toName": "service.checkout",
+        "line": 20
+      }
+    ],
+    "hadErrors": false
+  }
+}
