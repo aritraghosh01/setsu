@@ -1,0 +1,36 @@
+{
+  "name": "setsu-repo",
+  "repo": ".",
+  "tasks": [
+    {
+      "id": "architecture-trace",
+      "query": "How does the `setsu context` CLI command produce its evidence pack? Trace the flow from the CLI entry to the budget packer, naming the key functions.",
+      "successKeys": ["buildContext", "pack"]
+    },
+    {
+      "id": "symbol-usage",
+      "query": "Where is PageRank implemented in this codebase and where is it called from?",
+      "successKeys": ["pagerank", "analyze"]
+    },
+    {
+      "id": "dependency-impact",
+      "query": "What would break if I renamed the GraphEdgeRow interface? List the files that use it.",
+      "successKeys": ["graph-view", "queries"]
+    },
+    {
+      "id": "incremental-logic",
+      "query": "Which function decides whether a file is UNCHANGED, NEW, MODIFIED or DELETED during indexing, and what fast path does it use to avoid hashing?",
+      "successKeys": ["classifyFiles", "mtime"]
+    },
+    {
+      "id": "wasm-loading",
+      "query": "Where are the tree-sitter wasm grammar files loaded from at runtime, and what fallback locations are searched?",
+      "successKeys": ["wasm", "SETSU_WASM_DIR"]
+    },
+    {
+      "id": "mcp-freshness",
+      "query": "How does the SETSU MCP server keep its index fresh between tool calls?",
+      "successKeys": ["freshen", "reindex"]
+    }
+  ]
+}

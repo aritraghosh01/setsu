@@ -1,0 +1,36 @@
+{
+  "name": "ts-sample",
+  "repo": "fixtures/ts-sample",
+  "tasks": [
+    {
+      "id": "architecture-trace",
+      "query": "How does checkout reach the Stripe payment provider? Name the classes involved in order.",
+      "successKeys": ["CheckoutService", "StripeAdapter"]
+    },
+    {
+      "id": "symbol-usage",
+      "query": "Which methods call UserService.findUser? List them with their files.",
+      "successKeys": ["checkout", "authenticate"]
+    },
+    {
+      "id": "dependency-impact",
+      "query": "What breaks if I change the CustomerStatus enum? List the affected files.",
+      "successKeys": ["validation"]
+    },
+    {
+      "id": "unknown-concept",
+      "query": "Where is idempotency handled in this codebase and how does it work?",
+      "successKeys": ["idempotency", "charge"]
+    },
+    {
+      "id": "orientation",
+      "query": "Give a brief architecture overview of this repository: main layers and how a request flows.",
+      "successKeys": ["checkout", "payment"]
+    },
+    {
+      "id": "bug-localization",
+      "query": "A charge succeeds but the order is never saved. Which method should I inspect first and why?",
+      "successKeys": ["checkout"]
+    }
+  ]
+}

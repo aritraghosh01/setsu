@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "suite": "ts-sample",
+  "repo": "fixtures/ts-sample",
+  "runAt": "2026-09-07T11:02:53.476Z",
+  "runsPerVariant": 1,
+  "maxTurns": 25,
+  "model": "session default",
+  "variantA": {
+    "runs": 0,
+    "errors": 1,
+    "successRate": null,
+    "medianCostUsd": null,
+    "medianTurns": null,
+    "medianContextTokens": null,
+    "medianCacheCreationTokens": null,
+    "medianOutputTokens": null,
+    "medianDurationMs": null
+  },
+  "variantB": {
+    "runs": 0,
+    "errors": 1,
+    "successRate": null,
+    "medianCostUsd": null,
+    "medianTurns": null,
+    "medianContextTokens": null,
+    "medianCacheCreationTokens": null,
+    "medianOutputTokens": null,
+    "medianDurationMs": null
+  },
+  "records": [
+    {
+      "variant": "A",
+      "task": "bug-localization",
+      "run": 1,
+      "success": false,
+      "error": "unparseable output (code 1):  'claude.cmd' is not recognized as an internal or external command,\r\noperable program or batch file.\r\n",
+      "wallMs": 49
+    },
+    {
+      "variant": "B",
+      "task": "bug-localization",
+      "run": 1,
+      "success": false,
+      "error": "unparseable output (code 1):  'claude.cmd' is not recognized as an internal or external command,\r\noperable program or batch file.\r\n",
+      "wallMs": 43
+    }
+  ]
+}
