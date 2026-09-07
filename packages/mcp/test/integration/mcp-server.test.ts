@@ -14,9 +14,9 @@ let repo: string;
 let client: Client;
 let handle: ReturnType<typeof createSetsuMcpServer>;
 
-function firstText(result: { content?: unknown }): string {
-  const content = result.content as Array<{ type: string; text: string }>;
-  return content[0]?.text ?? '';
+function firstText(result: unknown): string {
+  const content = (result as { content?: Array<{ type: string; text: string }> }).content;
+  return content?.[0]?.text ?? '';
 }
 
 beforeAll(async () => {
