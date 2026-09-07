@@ -4,6 +4,7 @@ export { languageForPath, PARSEABLE_LANGUAGES } from './languages.js';
 export { discoverFiles, DEFAULT_EXCLUDES, type DiscoveredFile } from './discovery.js';
 export { estimateTokens, heuristicEstimator, type TokenEstimator, type TextKind } from './tokens.js';
 export { SetsuConfigSchema, DEFAULT_CONFIG, loadConfig, type SetsuConfig } from './config.js';
+export { createWatcher, type RepoWatcher, type RepoChange, type WatcherOptions } from './watcher.js';
 export type {
   ContextPack,
   ContextEvidence,

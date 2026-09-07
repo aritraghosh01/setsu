@@ -12,6 +12,7 @@ import {
   runGraphExport,
 } from './commands/graph-cmds.js';
 import { runContext } from './commands/context-cmd.js';
+import { runWatch } from './commands/watch-cmd.js';
 
 declare const __SETSU_VERSION__: string;
 const version = typeof __SETSU_VERSION__ === 'string' ? __SETSU_VERSION__ : '0.0.0-dev';
@@ -43,8 +44,21 @@ program
   .option('--repo <root>', 'repository root', process.cwd())
   .option('--stats', 'print index statistics')
   .option('--full', 'discard the existing index and rebuild')
-  .action(async (opts: { repo: string; stats?: boolean; full?: boolean }) => {
+  .option('--watch', 'keep indexing incrementally as files change')
+  .action(async (opts: { repo: string; stats?: boolean; full?: boolean; watch?: boolean }) => {
+    if (opts.watch) {
+      await runWatch(opts);
+      return;
+    }
     await runIndex(opts);
+  });
+
+program
+  .command('watch')
+  .description('Watch the repository and keep the graph fresh')
+  .option('--repo <root>', 'repository root', process.cwd())
+  .action(async (opts: { repo: string }) => {
+    await runWatch(opts);
   });
 
 program

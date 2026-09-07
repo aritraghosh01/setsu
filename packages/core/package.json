@@ -8,6 +8,7 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
+    "chokidar": "^4.0.3",
     "fast-glob": "^3.3.3",
     "ignore": "^7.0.3",
     "zod": "^3.24.0"
