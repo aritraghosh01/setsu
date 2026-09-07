@@ -13,14 +13,20 @@ import {
   NOT_STORED,
 } from '@setsu-ai/learning';
 
-const TASK_CLASSES = [
-  'architecture',
-  'symbol_lookup',
-  'debugging',
-  'refactor',
-  'repository_orientation',
-  'unknown',
-];
+function recordedTaskClasses(db: ReturnType<typeof openUsageDb>): string[] {
+  const classes = new Set<string>();
+  for (const row of db.all<{ payload: string }>(
+    `SELECT payload FROM events WHERE type = 'retrieval_outcome' ORDER BY ts DESC LIMIT 500`,
+  )) {
+    try {
+      const parsed = JSON.parse(row.payload) as { taskClass?: string };
+      if (parsed.taskClass) classes.add(parsed.taskClass);
+    } catch {
+      // ignore malformed rows
+    }
+  }
+  return [...classes].sort();
+}
 
 export async function runLearn(opts: { repo: string }): Promise<void> {
   const config = await loadConfig(opts.repo);
@@ -31,7 +37,7 @@ export async function runLearn(opts: { repo: string }): Promise<void> {
 
     console.log('Learned retrieval strategies by task class:');
     let any = false;
-    for (const taskClass of TASK_CLASSES) {
+    for (const taskClass of recordedTaskClasses(db)) {
       const scores = strategyScores(db, taskClass);
       if (scores.length === 0) continue;
       any = true;
