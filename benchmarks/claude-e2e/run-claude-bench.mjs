@@ -35,7 +35,9 @@ const model = argValue('--model', undefined);
 
 const suite = JSON.parse(readFileSync(tasksFile, 'utf8'));
 const repoSource = resolve(ROOT, suite.repo);
-const tasks = onlyTask ? suite.tasks.filter((t) => t.id === onlyTask) : suite.tasks;
+const onlyIds = onlyTask ? new Set(onlyTask.split(',')) : undefined;
+const tasks = onlyIds ? suite.tasks.filter((t) => onlyIds.has(t.id)) : suite.tasks;
+const label = argValue('--label', onlyTask ? onlyTask.replace(/[^a-z0-9-]/gi, '_') : 'all');
 
 const GUIDANCE = `\n<!-- SETSU:BEGIN scout -->\nFor repository-wide questions, use SETSU code intelligence before broad raw-file search.\nCall the \`setsu_context\` MCP tool with the task or question; it returns a token-budgeted\nevidence pack (symbols, snippets, graph paths). Use \`setsu_symbol\`, \`setsu_path\` and\n\`setsu_impact\` for symbol lookups, architecture chains and blast-radius checks.\nRead full files only when the returned evidence is insufficient.\n<!-- SETSU:END scout -->\n`;
 
@@ -172,6 +174,9 @@ function summarize(records, variant) {
 }
 
 const records = [];
+const resultsDirEarly = join(HERE, 'results');
+mkdirSync(resultsDirEarly, { recursive: true });
+const partialPath = join(resultsDirEarly, `${suite.name}-${label}.partial.jsonl`);
 console.log(`Suite: ${suite.name} | repo: ${repoSource}`);
 console.log(`Tasks: ${tasks.length} | runs/variant: ${runsPerVariant} | max turns: ${maxTurns}`);
 
@@ -182,12 +187,19 @@ for (const variant of ['A', 'B']) {
     for (const task of tasks) {
       for (let runIdx = 0; runIdx < runsPerVariant; runIdx += 1) {
         process.stdout.write(`[${variant}] ${task.id} run ${runIdx + 1}/${runsPerVariant} ... `);
-        const outcome = await claudeRun(ws, variant, task.query);
+        let outcome = await claudeRun(ws, variant, task.query);
+        // Transient failures (rate limits, empty results) get one retry.
+        if (outcome.error || outcome.isError || !outcome.resultText) {
+          await new Promise((r) => setTimeout(r, 20_000));
+          process.stdout.write('retry ... ');
+          outcome = await claudeRun(ws, variant, task.query);
+        }
         const success =
           !outcome.error &&
           !outcome.isError &&
           task.successKeys.every((key) => outcome.resultText.toLowerCase().includes(key.toLowerCase()));
         records.push({ variant, task: task.id, run: runIdx + 1, success, ...outcome });
+        appendFileSync(partialPath, JSON.stringify(records[records.length - 1]) + '\n');
         if (outcome.error) console.log(`ERROR: ${outcome.error.slice(0, 120)}`);
         else
           console.log(
