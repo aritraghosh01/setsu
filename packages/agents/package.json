@@ -9,7 +9,11 @@
   },
   "dependencies": {
     "@setsu-ai/core": "*",
+    "diff": "^7.0.0",
     "fast-glob": "^3.3.3",
     "yaml": "^2.7.0"
+  },
+  "devDependencies": {
+    "@types/diff": "^7.0.0"
   }
 }

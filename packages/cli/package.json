@@ -34,6 +34,7 @@
     "chalk": "^5.4.0",
     "chokidar": "^4.0.3",
     "commander": "^13.1.0",
+    "diff": "^7.0.0",
     "fast-glob": "^3.3.3",
     "graphology": "^0.26.0",
     "graphology-communities-louvain": "^2.0.2",

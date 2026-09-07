@@ -18,6 +18,19 @@ export type {
 export { upsertManagedBlock, hasManagedBlock, SCOUT_GUIDANCE } from './managed-block.js';
 export { parseFrontmatter, readText } from './shared.js';
 export {
+  planOptimizations,
+  type Recommendation,
+  type RecommendationType,
+  type OptimizationPlan,
+} from './optimizer.js';
+export { changesFor } from './apply-plan.js';
+export {
+  applyChanges,
+  renderDiff,
+  type FileChange,
+  type ApplyResult,
+} from './safe-apply.js';
+export {
   contextTax,
   findDuplicates,
   computeEfficiencyScore,

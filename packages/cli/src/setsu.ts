@@ -16,6 +16,7 @@ import { runWatch } from './commands/watch-cmd.js';
 import { serveStdio } from '@setsu-ai/mcp';
 import { runAdapters } from './commands/adapters-cmd.js';
 import { runDoctor, runScan } from './commands/doctor-cmd.js';
+import { runOptimize } from './commands/optimize-cmd.js';
 
 declare const __SETSU_VERSION__: string;
 const version = typeof __SETSU_VERSION__ === 'string' ? __SETSU_VERSION__ : '0.0.0-dev';
@@ -45,6 +46,16 @@ program
   .option('--skip-index', 'do not build the initial graph')
   .action(async (opts: { repo: string; yes?: boolean; mcp?: boolean; guidance?: boolean; skipIndex?: boolean }) => {
     await runInit(opts.repo, opts);
+  });
+
+program
+  .command('optimize')
+  .description('Recommend and apply context optimizations (advisory by default)')
+  .option('--repo <root>', 'repository root', process.cwd())
+  .option('--dry-run', 'show diffs of what --apply would change')
+  .option('--apply', 'apply auto-applicable changes with backup + rollback')
+  .action(async (opts: { repo: string; dryRun?: boolean; apply?: boolean }) => {
+    await runOptimize(opts);
   });
 
 program
