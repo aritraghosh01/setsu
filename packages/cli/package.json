@@ -21,7 +21,9 @@
     "build": "tsup"
   },
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
     "@setsu-ai/core": "*",
+    "@setsu-ai/mcp": "*",
     "@setsu-ai/graph": "*",
     "@setsu-ai/parsers": "*",
     "@setsu-ai/retrieval": "*",

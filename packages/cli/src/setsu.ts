@@ -13,6 +13,7 @@ import {
 } from './commands/graph-cmds.js';
 import { runContext } from './commands/context-cmd.js';
 import { runWatch } from './commands/watch-cmd.js';
+import { serveStdio } from '@setsu-ai/mcp';
 
 declare const __SETSU_VERSION__: string;
 const version = typeof __SETSU_VERSION__ === 'string' ? __SETSU_VERSION__ : '0.0.0-dev';
@@ -135,6 +136,15 @@ graph
   .option('--repo <root>', 'repository root', process.cwd())
   .action(async (opts: { repo: string }) => {
     await runGraphExport(opts);
+  });
+
+const mcp = program.command('mcp').description('Model Context Protocol server');
+mcp
+  .command('serve')
+  .description('Serve the 5-tool SETSU MCP surface over stdio')
+  .option('--repo <root>', 'repository root', process.cwd())
+  .action(async (opts: { repo: string }) => {
+    await serveStdio(opts.repo, version);
   });
 
 program.parseAsync(process.argv).catch((err: unknown) => {
