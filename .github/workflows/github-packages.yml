@@ -1,0 +1,36 @@
+name: Publish to GitHub Packages
+
+# Mirror publish for repo-page visibility. The canonical package is
+# @setsu-ai/cli on npmjs.com — GitHub Packages requires the scope to match
+# the repo owner, so the mirror is named @aritraghosh01/setsu-cli.
+on:
+  workflow_dispatch:
+
+jobs:
+  publish-ghp:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          registry-url: https://npm.pkg.github.com
+      - run: npm ci
+      - run: npm run build
+      - name: Rename package for GitHub Packages scope
+        run: |
+          node -e "
+            const fs = require('fs');
+            const p = JSON.parse(fs.readFileSync('packages/cli/package.json', 'utf8'));
+            p.name = '@aritraghosh01/setsu-cli';
+            p.publishConfig = { registry: 'https://npm.pkg.github.com' };
+            fs.writeFileSync('packages/cli/package.json', JSON.stringify(p, null, 2));
+          "
+      - name: Publish mirror to GitHub Packages
+        run: npm publish --tag beta -w packages/cli
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
