@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 400px; background: #fff; }
+  .banner {
+    position: relative;
+    width: 1200px;
+    height: 400px;
+    background-color: #F5EFDC;
+    background-image:
+      linear-gradient(to right, rgba(190, 180, 150, 0.28) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(190, 180, 150, 0.28) 1px, transparent 1px);
+    background-size: 25px 25px;
+    border: 3px solid #10131C;
+    border-radius: 16px;
+    overflow: hidden;
+    font-kerning: normal;
+  }
+  .left {
+    position: absolute;
+    left: 70px;
+    top: 46px;
+    width: 620px;
+  }
+  .title {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 104px;
+    line-height: 1;
+    color: #16233A;
+    letter-spacing: 2px;
+  }
+  .pron {
+    margin-top: 26px;
+    font-family: Consolas, 'Cascadia Mono', monospace;
+    font-size: 17px;
+    color: #2B2B2B;
+    letter-spacing: 1px;
+  }
+  .pron .sep { color: #6B6B6B; padding: 0 10px; }
+  .meaning {
+    margin-top: 14px;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 31px;
+    color: #A03A26;
+  }
+  .rule {
+    margin-top: 18px;
+    width: 430px;
+    height: 1px;
+    background: #B9AF97;
+  }
+  .desc {
+    margin-top: 18px;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 19px;
+    line-height: 1.55;
+    color: #2B2B2B;
+  }
+  .seal {
+    position: absolute;
+    right: 92px;
+    top: 40px;
+    width: 320px;
+    height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ring-outer, .ring-inner {
+    position: absolute;
+    border-radius: 50%;
+    border: 2px solid rgba(180, 168, 138, 0.55);
+  }
+  .ring-outer { width: 318px; height: 318px; }
+  .ring-inner { width: 296px; height: 296px; border-width: 1px; }
+  .kanji {
+    font-family: 'Yu Mincho', 'MS Mincho', serif;
+    font-size: 250px;
+    line-height: 1;
+    color: #16233A;
+    position: relative;
+    top: -8px;
+  }
+</style>
+</head>
+<body>
+  <div class="banner">
+    <div class="left">
+      <div class="title">SETSU</div>
+      <div class="pron">/seh-tsoo/<span class="sep">·</span>noun<span class="sep">·</span>Japanese</div>
+      <div class="meaning">node / joint / section</div>
+      <div class="rule"></div>
+      <div class="desc">
+        local-first code intelligence<br>
+        token-budgeted context packs<br>
+        built for AI coding agents
+      </div>
+    </div>
+    <div class="seal">
+      <div class="ring-outer"></div>
+      <div class="ring-inner"></div>
+      <div class="kanji">節</div>
+    </div>
+  </div>
+</body>
+</html>

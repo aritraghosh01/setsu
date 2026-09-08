@@ -1,27 +1,34 @@
 <div align="center">
 
-# 節 SETSU
+<img src="assets/setsu-banner.png" alt="SETSU — /seh-tsoo/ · noun · Japanese 節 · node / joint / section. Local-first code intelligence, token-budgeted context packs, built for AI coding agents." width="900">
 
-<h3>Give coding agents the code they need — not the whole repository.</h3>
+<br><br>
 
-<p><em>setsu — /seh-tsoo/ · noun · Japanese 節 · node, joint, section</em></p>
+<h3>Give coding agents the code they need —<br>not the whole repository.</h3>
 
-<p>
-  <a href="https://www.npmjs.com/package/@setsu-ai/cli"><img src="https://img.shields.io/badge/npm-%40setsu--ai%2Fcli-0E1A2B?style=flat-square" alt="npm"></a>
-  <img src="https://img.shields.io/badge/license-Apache--2.0-1F6F4A?style=flat-square" alt="Apache-2.0">
-  <img src="https://img.shields.io/badge/node-%3E%3D22.13-A03A26?style=flat-square" alt="node >=22.13">
-  <img src="https://img.shields.io/badge/MCP-native-0E1A2B?style=flat-square" alt="MCP native">
-  <img src="https://img.shields.io/badge/PRs-welcome-1F6F4A?style=flat-square" alt="PRs welcome">
-</p>
+<a href="docs/">Documentation</a> · <a href="#-quickstart">Quickstart</a> · <a href="#-commands">Commands</a> · <a href="#-privacy">Privacy</a> · <a href="#️-roadmap">Roadmap</a>
+
+<br>
+
+<a href="https://www.npmjs.com/package/@setsu-ai/cli"><img src="https://img.shields.io/badge/npm-v0.1.0--beta.1-A03A26?style=flat-square&logo=npm&logoColor=white" alt="npm v0.1.0-beta.1"></a>
+<a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache--2.0-A03A26?style=flat-square" alt="Apache-2.0 License"></a>
+<a href="https://modelcontextprotocol.io"><img src="https://img.shields.io/badge/MCP-native-0E1A2B?style=flat-square" alt="MCP native"></a>
+<img src="https://img.shields.io/badge/node-%3E%3D22.13-0E1A2B?style=flat-square" alt="node >=22.13">
+<a href="https://github.com/aritraghosh01/setsu/releases/tag/v0.1.0-beta.1"><img src="https://img.shields.io/badge/release-v0.1.0--beta.1-1F6F4A?style=flat-square" alt="Release v0.1.0-beta.1"></a>
+<a href="#-contributing"><img src="https://img.shields.io/badge/PRs-welcome-1F6F4A?style=flat-square" alt="PRs welcome"></a>
+
+<br><br>
 
 ```bash
-npx @setsu-ai/cli init
-setsu context "How does auth work?"
+npx @setsu-ai/cli init                 # detect agents, build the graph, wire up MCP
+setsu context "How does auth work?"    # token-budgeted evidence, not the whole repo
 ```
 
-<sub>Local-first context efficiency + code intelligence for Claude Code, Codex, Cursor, Copilot and Kiro.</sub>
+<sub>Available on npm as <a href="https://www.npmjs.com/package/@setsu-ai/cli"><code>@setsu-ai/cli</code></a> · latest version <b>0.1.0-beta.1</b> (2026-09-08) · for Claude Code, Codex, Cursor, Copilot and Kiro</sub>
 
 </div>
+
+<br>
 
 ---
 
