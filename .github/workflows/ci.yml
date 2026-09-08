@@ -14,6 +14,12 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
         node: [22, 24]
     runs-on: ${{ matrix.os }}
+    env:
+      # Windows runners expose TEMP as an 8.3 short path (C:\Users\RUNNER~1\...),
+      # which trips a libuv fs-event assertion in the watcher tests on Node 24.
+      # runner.temp is a long path (D:\a\_temp) and avoids it. No-op on POSIX.
+      TMP: ${{ runner.temp }}
+      TEMP: ${{ runner.temp }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
